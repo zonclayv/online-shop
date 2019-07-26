@@ -1,0 +1,11 @@
+# Spring properties
+spring:
+  application:
+     name: account-service  # Service registers under this name
+
+server.port: 9203   # HTTP (Tomcat) port
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9200/eureka
