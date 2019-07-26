@@ -19,13 +19,13 @@ public class BasicUserDetailsService implements UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
-    private List<InternalUser> users = Arrays.asList(
-            new InternalUser(1, "user", encoder.encode("12345"), "USER"),
-            new InternalUser(2, "admin", encoder.encode("12345"), "ADMIN")
-    );
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        List<InternalUser> users = Arrays.asList(
+                new InternalUser(1, "user", encoder.encode("12345"), "USER"),
+                new InternalUser(2, "admin", encoder.encode("12345"), "ADMIN")
+        );
 
         for(InternalUser internalUser : users) {
             if(internalUser.getUsername().equals(username)) {

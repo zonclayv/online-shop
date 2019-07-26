@@ -2,6 +2,19 @@
 spring:
   application:
      name: gateway-service  # Service registers under this name
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+      routes:
+      - id: auth-service
+        uri: http://localhost:9205
+        predicates:
+        - Path=/auth/**
+        filters:
+          - JWTFilter
 
 server.port: 9206   # HTTP (Tomcat) port
 
