@@ -2,6 +2,13 @@
 spring:
   application:
      name: account-service  # Service registers under this name
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB:shop_online}
+    username: ${MYSQL_USER:user}
+    password: ${MYSQL_PSW:pass}
 
 server.port: 9203   # HTTP (Tomcat) port
 
