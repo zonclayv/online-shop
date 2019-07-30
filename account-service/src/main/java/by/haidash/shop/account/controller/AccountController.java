@@ -34,7 +34,7 @@ public class AccountController {
                 .orElseThrow(() -> new AccountNotFoundException(id));
     }
 
-    @PostMapping("/accounts")
+    @PostMapping("/accounts/signin")
     public Account register(AccountDto dto){
 
         // TODO need implement checking
