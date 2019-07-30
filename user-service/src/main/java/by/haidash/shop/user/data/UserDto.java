@@ -1,6 +1,6 @@
-package by.haidash.shop.account.data;
+package by.haidash.shop.user.data;
 
-public class AccountDto {
+public class UserDto {
 
     private String email;
     private String psw;

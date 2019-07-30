@@ -1,7 +1,7 @@
 # Spring properties
 spring:
   application:
-     name: account-service  # Service registers under this name
+     name: user-service  # Service registers under this name
   jpa:
     hibernate:
       ddl-auto: update

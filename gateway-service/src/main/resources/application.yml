@@ -14,7 +14,7 @@ eureka:
 
 zuul:
   routes:
-    account-service:
+    user-service:
       path: /accounts/**
       service-id: ACCOUNT-SERVICE
       stripPrefix: false

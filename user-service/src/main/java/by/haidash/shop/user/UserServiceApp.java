@@ -1,4 +1,4 @@
-package by.haidash.shop.account;
+package by.haidash.shop.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,9 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-public class AccountServiceApp {
+public class UserServiceApp {
     public static void main(String[] args) {
-        SpringApplication.run(AccountServiceApp.class, args);
+        SpringApplication.run(UserServiceApp.class, args);
     }
 
     @Bean

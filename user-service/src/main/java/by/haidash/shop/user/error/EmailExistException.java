@@ -1,4 +1,4 @@
-package by.haidash.shop.account.error;
+package by.haidash.shop.user.error;
 
 public class EmailExistException extends RuntimeException {
 
