@@ -38,7 +38,7 @@ public class CategoryController {
     }
 
     @GetMapping("/categories/top")
-    public List<Category> getTopLavelCategories() {
+    public List<Category> getTopLevelCategories() {
         return categoryRepository.findByParentIsNull();
     }
 
