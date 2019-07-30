@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>by.haidash.shop</groupId>
-    <artifactId>catalog-service</artifactId>
+    <artifactId>product-service</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>catalog-service</name>
+    <name>product-service</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -1,4 +1,4 @@
-package by.haidash.shop.catalog;
+package by.haidash.shop.product;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,8 +6,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-public class CatalogServiceApp {
+public class ProductServiceApp {
     public static void main(String[] args) {
-        SpringApplication.run(CatalogServiceApp.class, args);
+        SpringApplication.run(ProductServiceApp.class, args);
     }
 }

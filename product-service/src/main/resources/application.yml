@@ -1,7 +1,7 @@
 # Spring properties
 spring:
   application:
-     name: catalog-service  # Service registers under this name
+     name: product-service  # Service registers under this name
 
 server.port: 9202   # HTTP (Tomcat) port
 

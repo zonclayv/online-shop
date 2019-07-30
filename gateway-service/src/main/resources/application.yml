@@ -29,9 +29,9 @@ zuul:
       service-id: CART-SERVICE
       stripPrefix: false
       sensitive-headers: Cookie,Set-Cookie
-    catalog-service:
-      path: /catalog/**
-      service-id: CATALOG-SERVICE
+    product-service:
+      path: /product/**
+      service-id: PRODUCT-SERVICE
       stripPrefix: false
       sensitive-headers: Cookie,Set-Cookie
     web-service:
