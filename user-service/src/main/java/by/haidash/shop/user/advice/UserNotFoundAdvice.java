@@ -1,6 +1,6 @@
 package by.haidash.shop.user.advice;
 
-import by.haidash.shop.user.error.UserNotFoundException;
+import by.haidash.shop.user.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

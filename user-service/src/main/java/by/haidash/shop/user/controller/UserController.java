@@ -2,8 +2,8 @@ package by.haidash.shop.user.controller;
 
 import by.haidash.shop.user.data.UserDto;
 import by.haidash.shop.user.entity.User;
-import by.haidash.shop.user.error.UserNotFoundException;
-import by.haidash.shop.user.error.EmailExistException;
+import by.haidash.shop.user.exception.UserNotFoundException;
+import by.haidash.shop.user.exception.EmailExistException;
 import by.haidash.shop.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

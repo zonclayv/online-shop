@@ -1,4 +1,4 @@
-package by.haidash.shop.user.error;
+package by.haidash.shop.user.exception;
 
 public class UserNotFoundException extends RuntimeException {
 
