@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    List<Product> findByCategory_CategoryId(Long categoryId);
-    List<Product> findByKeyword_KeywordId(Long keywordId);
+    List<Product> findByCategories_id(Long categoryId);
+    List<Product> findByKeywords_id(Long keywordId);
 }

@@ -5,11 +5,17 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <changeSet author="haidash" id="2">
-        <insert tableName="user">
-            <column name="id" valueNumeric="1"/>
-            <column name="email" value="user"/>
-            <column name="psw" value="$2a$10$4TiQ0NeRUhlfbNYrghlBGOrmGjvOBq2RLMyvzoR9O2DO6vH4wZyvq"/>
-        </insert>
+    <changeSet author="haidash" id="1">
+        <createTable tableName="keyword">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="keyword"/>
+        </rollback>
     </changeSet>
 </databaseChangeLog>

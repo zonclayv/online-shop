@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <include file="/db/changelog/changes/keyword/create-keyword-table-changelog-1.xml"/>
+    <include file="/db/changelog/changes/keyword/insert-keyword-table-changelog-2.xml"/>
+    <include file="/db/changelog/changes/keyword/update-keyword-table-precondition-3.xml"/>
+    <include file="/db/changelog/changes/category/create-category-table-changelog-1.xml"/>
+    <include file="/db/changelog/changes/category/insert-category-table-changelog-2.xml"/>
+    <include file="/db/changelog/changes/category/update-category-table-precondition-3.xml"/>
+    <include file="/db/changelog/changes/product/create-product-table-changelog-1.xml"/>
+    <include file="/db/changelog/changes/product/insert-product-table-changelog-2.xml"/>
+    <include file="/db/changelog/changes/product/update-product-table-precondition-3.xml"/>
+</databaseChangeLog>

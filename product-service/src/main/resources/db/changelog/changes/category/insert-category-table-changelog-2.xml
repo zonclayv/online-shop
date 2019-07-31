@@ -6,10 +6,18 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     <changeSet author="haidash" id="2">
-        <insert tableName="user">
+        <insert tableName="category">
             <column name="id" valueNumeric="1"/>
-            <column name="email" value="user"/>
-            <column name="psw" value="$2a$10$4TiQ0NeRUhlfbNYrghlBGOrmGjvOBq2RLMyvzoR9O2DO6vH4wZyvq"/>
+            <column name="name" value="Электроника"/>
+        </insert>
+        <insert tableName="category">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Гаджеты"/>
+            <column name="parent_id" value="1"/>
+        </insert>
+        <insert tableName="category">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Бытовая техника"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

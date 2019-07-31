@@ -34,6 +34,16 @@ zuul:
       service-id: PRODUCT-SERVICE
       stripPrefix: false
       sensitive-headers: Cookie,Set-Cookie
+    keyword-service:
+      path: /keywords/**
+      service-id: PRODUCT-SERVICE
+      stripPrefix: false
+      sensitive-headers: Cookie,Set-Cookie
+    category-service:
+      path: /categories/**
+      service-id: PRODUCT-SERVICE
+      stripPrefix: false
+      sensitive-headers: Cookie,Set-Cookie
     web-service:
       path: /**
       service-id: WEB-SERVICE

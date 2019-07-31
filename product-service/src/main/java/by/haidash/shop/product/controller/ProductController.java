@@ -32,8 +32,8 @@ public class ProductController {
         return productRepository.findAll();
     }
 
-    @GetMapping("/products")
-    public Product getProduct(Long id) {
+    @GetMapping("/products/{id}")
+    public Product getProduct(@PathVariable  Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException(id));
     }
@@ -84,12 +84,12 @@ public class ProductController {
     @GetMapping("/products/keyword/{keywordId}")
     public List<Product> findByKeyword (@PathVariable Long keywordId) {
 
-        return productRepository.findByKeyword_KeywordId(keywordId);
+        return productRepository.findByKeywords_id(keywordId);
     }
 
     @GetMapping("/products/category/{categoryId}")
     public List<Product> findByCategory (@PathVariable Long categoryId) {
 
-        return productRepository.findByCategory_CategoryId(categoryId);
+        return productRepository.findByCategories_id(categoryId);
     }
 }

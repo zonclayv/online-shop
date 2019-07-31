@@ -6,10 +6,17 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     <changeSet author="haidash" id="2">
-        <insert tableName="user">
+        <insert tableName="product">
             <column name="id" valueNumeric="1"/>
-            <column name="email" value="user"/>
-            <column name="psw" value="$2a$10$4TiQ0NeRUhlfbNYrghlBGOrmGjvOBq2RLMyvzoR9O2DO6vH4wZyvq"/>
+            <column name="name" value="Фитнес браслет"/>
+        </insert>
+        <insert tableName="product_keywords">
+            <column name="keywords_id" value="2"/>
+            <column name="product_id" value="1"/>
+        </insert>
+        <insert tableName="product_categories">
+            <column name="categories_id" value="2"/>
+            <column name="product_id" value="1"/>
         </insert>
     </changeSet>
 </databaseChangeLog>
