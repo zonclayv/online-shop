@@ -23,18 +23,18 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping("/accounts")
+    @GetMapping("/users")
     public List<User> all() {
         return userRepository.findAll();
     }
 
-    @GetMapping("/accounts/{id}")
+    @GetMapping("/users/{id}")
     public User getById(@PathVariable Long id){
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @PostMapping("/accounts/signin")
+    @PostMapping("/users/signin")
     public User register(UserDto dto){
 
         // TODO need implement checking

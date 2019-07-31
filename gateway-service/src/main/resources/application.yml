@@ -15,8 +15,8 @@ eureka:
 zuul:
   routes:
     user-service:
-      path: /accounts/**
-      service-id: ACCOUNT-SERVICE
+      path: /users/**
+      service-id: USER-SERVICE
       stripPrefix: false
       sensitive-headers: Cookie,Set-Cookie
     auth-service:
@@ -30,7 +30,7 @@ zuul:
       stripPrefix: false
       sensitive-headers: Cookie,Set-Cookie
     product-service:
-      path: /product/**
+      path: /products/**
       service-id: PRODUCT-SERVICE
       stripPrefix: false
       sensitive-headers: Cookie,Set-Cookie

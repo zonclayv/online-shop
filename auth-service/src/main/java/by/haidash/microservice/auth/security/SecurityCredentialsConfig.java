@@ -33,7 +33,7 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig))
+                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, passwordEncoder()))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, jwtConfig.getLoginUri()).permitAll()
                 .antMatchers(HttpMethod.POST, jwtConfig.getSigninUri()).permitAll()

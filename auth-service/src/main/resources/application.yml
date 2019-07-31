@@ -2,7 +2,15 @@
 spring:
   application:
      name: auth-service  # Service registers under this name
-
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB:shop_online}
+    username: ${MYSQL_USER:user}
+    password: ${MYSQL_PSW:pass}
 server.port: 9205   # HTTP (Tomcat) port
 
 eureka:

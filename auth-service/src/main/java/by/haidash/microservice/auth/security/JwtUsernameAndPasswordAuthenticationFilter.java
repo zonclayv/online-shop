@@ -4,11 +4,13 @@ import by.haidash.microservice.security.JwtConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -23,12 +25,16 @@ import java.util.stream.Collectors;
 
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private AuthenticationManager authManager;
+    private final AuthenticationManager authManager;
     private final JwtConfig jwtConfig;
+    final BCryptPasswordEncoder encoder;
 
-    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager, JwtConfig jwtConfig) {
+    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager,
+                                                      JwtConfig jwtConfig,
+                                                      BCryptPasswordEncoder encoder) {
         this.authManager = authManager;
         this.jwtConfig = jwtConfig;
+        this.encoder = encoder;
 
         this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(jwtConfig.getLoginUri(), "POST"));
     }

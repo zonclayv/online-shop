@@ -1,5 +1,9 @@
 package by.haidash.shop.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,7 +12,7 @@ import javax.persistence.Id;
 public class User {
 
     private @Id @GeneratedValue Long id;
-    private String email;
+    private @Column(unique = true) String email;
     private String psw;
     private String firstName;
     private String lastName;
@@ -30,6 +34,7 @@ public class User {
         this.email = email;
     }
 
+    @JsonIgnore
     public String getPsw() {
         return psw;
     }
