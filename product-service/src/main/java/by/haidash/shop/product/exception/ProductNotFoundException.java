@@ -1,4 +1,4 @@
-package by.haidash.shop.product.error;
+package by.haidash.shop.product.exception;
 
 public class ProductNotFoundException extends EntityNotFoundException {
 

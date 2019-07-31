@@ -1,6 +1,6 @@
 package by.haidash.shop.product.advice;
 
-import by.haidash.shop.product.error.EntityNotFoundException;
+import by.haidash.shop.product.exception.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

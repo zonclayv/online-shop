@@ -1,7 +1,7 @@
 package by.haidash.shop.product.controller;
 
 import by.haidash.shop.product.entity.Keyword;
-import by.haidash.shop.product.error.KeywordNotFoundException;
+import by.haidash.shop.product.exception.KeywordNotFoundException;
 import by.haidash.shop.product.repository.KeywordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
