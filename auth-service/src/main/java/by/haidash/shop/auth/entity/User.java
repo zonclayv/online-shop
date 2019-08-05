@@ -1,4 +1,4 @@
-package by.haidash.microservice.auth.entity;
+package by.haidash.shop.auth.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,6 +1,6 @@
-package by.haidash.microservice.auth.repository;
+package by.haidash.shop.auth.repository;
 
-import by.haidash.microservice.auth.entity.User;
+import by.haidash.shop.auth.entity.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

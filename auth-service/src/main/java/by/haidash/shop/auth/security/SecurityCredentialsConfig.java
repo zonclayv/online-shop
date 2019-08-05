@@ -1,6 +1,7 @@
-package by.haidash.microservice.auth.security;
+package by.haidash.shop.auth.security;
 
-import by.haidash.microservice.security.JwtConfig;
+import by.haidash.shop.auth.repository.InternalUserRepository;
+import by.haidash.shop.security.JwtConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,9 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     @Autowired
+    private InternalUserRepository userRepository;
+
+    @Autowired
     private JwtConfig jwtConfig;
 
     @Override
@@ -33,7 +37,7 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, passwordEncoder()))
+                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, userRepository))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, jwtConfig.getLoginUri()).permitAll()
                 .antMatchers(HttpMethod.POST, jwtConfig.getSigninUri()).permitAll()

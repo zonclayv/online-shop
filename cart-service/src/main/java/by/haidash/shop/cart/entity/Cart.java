@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,8 +12,9 @@ public class Cart {
 
     private @Id @GeneratedValue Long id;
     private @Column(nullable = false)  Long user;
+    private @Column(nullable = false)  CartStatus status = CartStatus.NEW;
     private @JsonFormat(pattern = "dd/MM/yyyy hh:mm") LocalDateTime creationDate;
-    private @ManyToMany @JoinTable(name = "cart_products") List<OrderProduct> products;
+    private @ManyToMany(cascade = {CascadeType.ALL}) @JoinTable(name = "cart_products") List<OrderProduct> products = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -44,5 +46,13 @@ public class Cart {
 
     public void setProducts(List<OrderProduct> products) {
         this.products = products;
+    }
+
+    public CartStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CartStatus status) {
+        this.status = status;
     }
 }

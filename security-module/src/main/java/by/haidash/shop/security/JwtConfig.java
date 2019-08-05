@@ -1,4 +1,4 @@
-package by.haidash.microservice.security;
+package by.haidash.shop.security;
 
 import org.springframework.beans.factory.annotation.Value;
 

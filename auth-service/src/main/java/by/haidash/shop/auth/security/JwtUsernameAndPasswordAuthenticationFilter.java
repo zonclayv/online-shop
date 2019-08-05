@@ -1,15 +1,20 @@
-package by.haidash.microservice.auth.security;
+package by.haidash.shop.auth.security;
 
-import by.haidash.microservice.security.JwtConfig;
+import by.haidash.shop.auth.repository.InternalUserRepository;
+import by.haidash.shop.security.JwtConfig;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -27,14 +32,14 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
     private final AuthenticationManager authManager;
     private final JwtConfig jwtConfig;
-    final BCryptPasswordEncoder encoder;
+    private final InternalUserRepository userRepository;
 
     public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager,
                                                       JwtConfig jwtConfig,
-                                                      BCryptPasswordEncoder encoder) {
+                                                      InternalUserRepository userRepository) {
         this.authManager = authManager;
         this.jwtConfig = jwtConfig;
-        this.encoder = encoder;
+        this.userRepository = userRepository;
 
         this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(jwtConfig.getLoginUri(), "POST"));
     }
@@ -60,10 +65,14 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                                             Authentication auth) throws IOException, ServletException {
 
         Long now = System.currentTimeMillis();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
         String token = Jwts.builder()
                 .setSubject(auth.getName())
                 .claim("authorities", auth.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .claim("userId", userRepository.findByEmail(userDetails.getUsername())
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found"))
+                        .getId())
                 .setIssuedAt(new Date(now))
                 .setExpiration(new Date(now + jwtConfig.getExpiration() * 1000))  // in milliseconds
                 .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())

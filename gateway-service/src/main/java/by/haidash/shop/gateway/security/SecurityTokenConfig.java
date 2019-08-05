@@ -2,7 +2,7 @@ package by.haidash.shop.gateway.security;
 
 import javax.servlet.http.HttpServletResponse;
 
-import by.haidash.microservice.security.JwtConfig;
+import by.haidash.shop.security.JwtConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private JwtConfig jwtConfig;
 

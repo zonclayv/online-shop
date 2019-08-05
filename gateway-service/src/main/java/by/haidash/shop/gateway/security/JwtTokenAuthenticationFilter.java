@@ -1,6 +1,6 @@
 package by.haidash.shop.gateway.security;
 
-import by.haidash.microservice.security.JwtConfig;
+import by.haidash.shop.security.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

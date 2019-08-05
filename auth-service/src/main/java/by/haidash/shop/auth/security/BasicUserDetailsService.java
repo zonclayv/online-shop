@@ -1,7 +1,7 @@
-package by.haidash.microservice.auth.security;
+package by.haidash.shop.auth.security;
 
-import by.haidash.microservice.auth.entity.User;
-import by.haidash.microservice.auth.repository.InternalUserRepository;
+import by.haidash.shop.auth.entity.User;
+import by.haidash.shop.auth.repository.InternalUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
