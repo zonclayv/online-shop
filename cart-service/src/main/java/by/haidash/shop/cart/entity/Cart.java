@@ -14,7 +14,10 @@ public class Cart {
     private @Column(nullable = false)  Long user;
     private @Column(nullable = false)  CartStatus status = CartStatus.NEW;
     private @JsonFormat(pattern = "dd/MM/yyyy hh:mm") LocalDateTime creationDate;
-    private @ManyToMany(cascade = {CascadeType.ALL}) @JoinTable(name = "cart_products") List<OrderProduct> products = new ArrayList<>();
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "cart_products")
+    private List<OrderProduct> products = new ArrayList<>();
 
     public Long getId() {
         return id;
