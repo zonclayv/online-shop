@@ -7,7 +7,9 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 @EnableZuulProxy
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+        "by.haidash.shop.gateway",
+        "by.haidash.shop.security"})
 public class GatewayServiceApp {
     public static void main(String[] args) {
         SpringApplication.run(GatewayServiceApp.class, args);

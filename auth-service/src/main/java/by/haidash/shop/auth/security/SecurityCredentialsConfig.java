@@ -1,7 +1,7 @@
 package by.haidash.shop.auth.security;
 
 import by.haidash.shop.auth.repository.InternalUserRepository;
-import by.haidash.shop.security.JwtConfig;
+import by.haidash.shop.security.data.JwtConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

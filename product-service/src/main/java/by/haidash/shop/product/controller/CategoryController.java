@@ -16,12 +16,12 @@ public class CategoryController {
     private CategoryRepository categoryRepository;
 
     @GetMapping("/categories")
-    public List<Category> getCategories() {
+    public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
     @GetMapping("/categories/{id}")
-    public Category getCategories(@PathVariable Long id) {
+    public Category getCategory(@PathVariable Long id) {
 
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException(id));

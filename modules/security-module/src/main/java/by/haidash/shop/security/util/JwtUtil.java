@@ -1,8 +1,7 @@
 package by.haidash.shop.security.util;
 
-import by.haidash.shop.security.JwtConfig;
+import by.haidash.shop.security.data.JwtConfig;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

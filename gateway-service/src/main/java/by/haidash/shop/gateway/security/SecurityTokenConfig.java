@@ -2,7 +2,7 @@ package by.haidash.shop.gateway.security;
 
 import javax.servlet.http.HttpServletResponse;
 
-import by.haidash.shop.security.JwtConfig;
+import by.haidash.shop.security.data.JwtConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -31,10 +31,5 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, jwtConfig.getLoginUri()).permitAll()
                 .antMatchers(HttpMethod.POST, jwtConfig.getSigninUri()).permitAll()
                 .anyRequest().authenticated();
-    }
-
-    @Bean
-    public JwtConfig jwtConfig() {
-        return new JwtConfig();
     }
 }

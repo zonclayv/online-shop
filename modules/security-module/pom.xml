@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>by.haidash.microservice</groupId>
+    <groupId>by.haidash.shop</groupId>
     <artifactId>security-module</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>security-module</name>
