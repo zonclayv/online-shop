@@ -8,7 +8,9 @@ import java.util.List;
 public class ProductDto {
 
     private String name;
+
     private List<Keyword> keywords;
+
     private List<Category> categories;
 
     public String getName() {

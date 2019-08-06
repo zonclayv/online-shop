@@ -8,8 +8,12 @@ import javax.persistence.Id;
 @Entity
 public class Keyword {
 
-    private @Id @GeneratedValue Long id;
-    private @Column(unique = true) String name;
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(unique = true)
+    private String name;
 
     public Long getId() {
         return id;

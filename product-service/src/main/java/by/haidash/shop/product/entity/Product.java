@@ -1,18 +1,27 @@
 package by.haidash.shop.product.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 public class Product {
 
-    private @Id @GeneratedValue Long id;
+    @Id
+    @GeneratedValue
+    private  Long id;
+
     private String name;
 
     // TODO add possibility to load/upload images. s3 bucket can be one of the possible solutions.
     // private List<Images> images;
-    private @ManyToMany @JoinTable(name = "product_keywords") List<Keyword> keywords;
-    private @ManyToMany @JoinColumn(name = "product_categories") List<Category> categories;
+    @ManyToMany
+    @JoinTable(name = "product_keywords")
+    private  List<Keyword> keywords;
+
+    @ManyToMany
+    @JoinColumn(name = "product_categories")
+    private List<Category> categories;
 
     public Long getId() {
         return id;

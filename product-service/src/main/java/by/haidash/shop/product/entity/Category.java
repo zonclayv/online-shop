@@ -8,9 +8,14 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Category {
 
-    private @Id @GeneratedValue Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String name;
-    private @ManyToOne Category parent;
+
+    @ManyToOne
+    private Category parent;
 
     public Long getId() {
         return id;
