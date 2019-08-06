@@ -1,9 +1,9 @@
 package by.haidash.shop.cart.controller;
 
+import by.haidash.shop.cart.exception.PermissionDeniedException;
 import by.haidash.shop.security.exception.WrongAuthenticationTokenException;
 import by.haidash.shop.security.util.JwtUtil;
 import by.haidash.shop.cart.entity.Cart;
-import by.haidash.shop.cart.entity.CartStatus;
 import by.haidash.shop.cart.entity.OrderProduct;
 import by.haidash.shop.cart.exception.CartNotFoundException;
 import by.haidash.shop.cart.repository.CartRepository;
@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,27 +23,17 @@ public class CartController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @GetMapping("/cart")
-    public Cart getCart(HttpServletRequest request) {
-
-        Long userId = jwtUtil.parseUserId(request)
-                .orElseThrow(() -> new WrongAuthenticationTokenException("Wrong authentication token"));
-
-        return cartRepository.findByUserAndStatuses(userId, Arrays.asList(CartStatus.NEW, CartStatus.CHECKOUT))
-                .orElseGet(() -> crateNewCart(userId));
+    @GetMapping("/carts/{cartId}")
+    public Cart getCartById(HttpServletRequest request, @PathVariable Long cartId) {
+        return getCart(request, cartId);
     }
 
-    @PutMapping("/cart/product/{productId}/{quantity}")
+    @PutMapping("/carts/{cartId}/products/{productId}/{quantity}")
     public Cart addProduct(HttpServletRequest request,
+                           @PathVariable  Long cartId,
                            @PathVariable  Long productId,
                            @PathVariable  Integer quantity) {
-
-        Long userId = jwtUtil.parseUserId(request)
-                .orElseThrow(() -> new WrongAuthenticationTokenException("Wrong authentication token"));
-
-        Cart cart = cartRepository.findByUserAndStatuses(userId, Arrays.asList(CartStatus.NEW, CartStatus.CHECKOUT))
-                .orElseGet(() -> crateNewCart(userId));
-
+        Cart cart = getCart(request, cartId);
         List<OrderProduct> products = cart.getProducts();
         OrderProduct product = products.stream()
                 .filter(orderProduct -> Objects.equals(orderProduct.getId(), productId))
@@ -65,19 +53,15 @@ public class CartController {
         return cartRepository.save(cart);
     }
 
-    @PatchMapping("/cart/product/{productId}/{quantity}")
+    @PatchMapping("/carts/{cartId}/products/{productId}/{quantity}")
     public Cart updateProductQuantity(HttpServletRequest request,
-                           @PathVariable  Long productId,
-                           @PathVariable  Integer quantity) {
+                                      @PathVariable  Long cartId,
+                                      @PathVariable  Long productId,
+                                      @PathVariable  Integer quantity) {
 
-        Long userId = jwtUtil.parseUserId(request)
-                .orElseThrow(() -> new WrongAuthenticationTokenException("Wrong authentication token"));
-
-        Cart cart = cartRepository.findByUserAndStatuses(userId, Arrays.asList(CartStatus.NEW, CartStatus.CHECKOUT))
-                .orElseGet(() -> crateNewCart(userId));
-
-        List<OrderProduct> products = cart.getProducts();
-        products.stream()
+        Cart cart = getCart(request, cartId);
+        cart.getProducts()
+                .stream()
                 .filter(orderProduct -> Objects.equals(orderProduct.getId(), productId))
                 .findFirst()
                 .ifPresent(orderProduct-> orderProduct.setQuantity(quantity));
@@ -85,28 +69,29 @@ public class CartController {
         return cartRepository.save(cart);
     }
 
-    @DeleteMapping("/cart/product/{productId}")
-    public Cart removeProduct(HttpServletRequest request, @PathVariable  Long productId) {
+    @DeleteMapping("/carts/{cartId}/products/{productId}")
+    public Cart removeProduct(HttpServletRequest request,
+                              @PathVariable  Long cartId,
+                              @PathVariable  Long productId) {
 
-        Long userId = jwtUtil.parseUserId(request)
-                .orElseThrow(() -> new WrongAuthenticationTokenException("Wrong authentication token"));
-
-        Cart cart = cartRepository.findByUserAndStatuses(userId, Arrays.asList(CartStatus.NEW, CartStatus.CHECKOUT))
-                .orElseThrow(() -> new CartNotFoundException("Cart not fount for current user"));
-
-        List<OrderProduct> products = cart.getProducts();
-        products.removeIf(orderProduct-> Objects.equals(orderProduct.getId(), productId));
+        Cart cart = getCart(request, cartId);
+        cart.getProducts()
+                .removeIf(orderProduct-> Objects.equals(orderProduct.getId(), productId));
 
         return cartRepository.save(cart);
     }
 
-    private Cart crateNewCart(Long userId) {
+    private Cart getCart(HttpServletRequest request, Long cartId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new CartNotFoundException("Cart with id '" + cartId + "' not fount"));
 
-        Cart newCart = new Cart();
-        newCart.setStatus(CartStatus.NEW);
-        newCart.setCreationDate(LocalDateTime.now());
-        newCart.setUser(userId);
+        Long userId = jwtUtil.parseUserId(request)
+                .orElseThrow(() -> new WrongAuthenticationTokenException("Wrong authentication token"));
 
-        return newCart;
+        if (Objects.equals(cart.getUser(), userId)) {
+            throw new PermissionDeniedException("You do not have permission for getting cart with id '" + cartId + "'");
+        }
+
+        return cart;
     }
 }

@@ -1,7 +1,7 @@
 # Spring properties
 spring:
   application:
-     name: product-service  # Service registers under this name
+     name: order-product-service  # Service registers under this name
   main:
     allow-bean-definition-overriding: true
   jpa:

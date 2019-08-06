@@ -25,7 +25,7 @@ zuul:
       stripPrefix: false
       sensitive-headers: Cookie,Set-Cookie
     cart-service:
-      path: /cart/**
+      path: /carts/**
       service-id: CART-SERVICE
       stripPrefix: false
       sensitive-headers: Cookie,Set-Cookie
