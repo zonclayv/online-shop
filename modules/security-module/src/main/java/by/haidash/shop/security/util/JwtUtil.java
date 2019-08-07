@@ -4,7 +4,6 @@ import by.haidash.shop.security.data.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,10 +35,5 @@ public class JwtUtil {
         } catch (Exception e) {
             return Optional.empty();
         }
-    }
-
-    @Bean
-    public JwtConfig jwtConfig() {
-        return new JwtConfig();
     }
 }
