@@ -8,9 +8,15 @@ import javax.persistence.Id;
 @Entity
 public class OrderProduct {
 
-    private @Id @GeneratedValue Long id;
-    private @Column(nullable = false)  Long product;
-    private @Column(nullable = false) Integer quantity;
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(nullable = false)
+    private Long product;
+
+    @Column(nullable = false)
+    private Integer quantity;
 
     public Long getId() {
         return id;

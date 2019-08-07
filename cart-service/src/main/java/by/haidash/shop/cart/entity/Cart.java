@@ -7,8 +7,12 @@ import java.util.List;
 @Entity
 public class Cart {
 
-    private @Id @GeneratedValue Long id;
-    private @Column(nullable = false)  Long user;
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(nullable = false)
+    private Long user;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "cart_products")

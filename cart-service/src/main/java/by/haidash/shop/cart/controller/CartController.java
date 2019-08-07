@@ -7,6 +7,9 @@ import by.haidash.shop.cart.entity.Cart;
 import by.haidash.shop.cart.entity.OrderProduct;
 import by.haidash.shop.cart.exception.CartNotFoundException;
 import by.haidash.shop.cart.repository.CartRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,24 +18,36 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
+@RequestMapping("/carts")
+@Api(description = "Set of endpoints for creating, retrieving and updating of cart.")
 public class CartController {
 
-    @Autowired
-    private CartRepository cartRepository;
+    private final JwtUtil jwtUtil;
+    private final CartRepository cartRepository;
 
     @Autowired
-    private JwtUtil jwtUtil;
+    public CartController(CartRepository cartRepository, JwtUtil jwtUtil) {
+        this.cartRepository = cartRepository;
+        this.jwtUtil = jwtUtil;
+    }
 
-    @GetMapping("/carts/{cartId}")
-    public Cart getCartById(HttpServletRequest request, @PathVariable Long cartId) {
+    @GetMapping("/{cartId}")
+    @ApiOperation("Returns a specific cart by their identifier. 404 if does not exist.")
+    public Cart getCartById(HttpServletRequest request,
+                            @ApiParam("Id of the cart to be obtained. Cannot be empty.")
+                                @PathVariable Long cartId) {
         return getCart(request, cartId);
     }
 
-    @PutMapping("/carts/{cartId}/products/{productId}/{quantity}")
+    @PutMapping("/{cartId}/products/{productId}/{quantity}")
+    @ApiOperation("Adds a given product with provided quantity to the specific cart by their identifier.")
     public Cart addProduct(HttpServletRequest request,
-                           @PathVariable  Long cartId,
-                           @PathVariable  Long productId,
-                           @PathVariable  Integer quantity) {
+                           @ApiParam("Id of the cart. Cannot be empty.")
+                                @PathVariable  Long cartId,
+                           @ApiParam("Id of the product. Cannot be empty.")
+                                @PathVariable  Long productId,
+                           @ApiParam("Product quantity. Cannot be empty.")
+                                @PathVariable  Integer quantity) {
         Cart cart = getCart(request, cartId);
         List<OrderProduct> products = cart.getProducts();
         OrderProduct product = products.stream()
@@ -53,11 +68,15 @@ public class CartController {
         return cartRepository.save(cart);
     }
 
-    @PatchMapping("/carts/{cartId}/products/{productId}/{quantity}")
+    @PatchMapping("/{cartId}/products/{productId}/{quantity}")
+    @ApiOperation("Updates quantity of product with given id in the specific cart.")
     public Cart updateProductQuantity(HttpServletRequest request,
-                                      @PathVariable  Long cartId,
-                                      @PathVariable  Long productId,
-                                      @PathVariable  Integer quantity) {
+                                      @ApiParam("Id of the cart. Cannot be empty.")
+                                          @PathVariable  Long cartId,
+                                      @ApiParam("Id of the product. Cannot be empty.")
+                                          @PathVariable  Long productId,
+                                      @ApiParam("Product quantity. Cannot be empty.")
+                                          @PathVariable  Integer quantity) {
 
         Cart cart = getCart(request, cartId);
         cart.getProducts()
@@ -69,10 +88,13 @@ public class CartController {
         return cartRepository.save(cart);
     }
 
-    @DeleteMapping("/carts/{cartId}/products/{productId}")
+    @DeleteMapping("/{cartId}/products/{productId}")
+    @ApiOperation("Removes product with given id from the specific cart.")
     public Cart removeProduct(HttpServletRequest request,
-                              @PathVariable  Long cartId,
-                              @PathVariable  Long productId) {
+                              @ApiParam("Id of the cart. Cannot be empty.")
+                                  @PathVariable  Long cartId,
+                              @ApiParam("Id of the product. Cannot be empty.")
+                                  @PathVariable  Long productId) {
 
         Cart cart = getCart(request, cartId);
         cart.getProducts()
