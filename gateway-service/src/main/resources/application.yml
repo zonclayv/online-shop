@@ -13,39 +13,24 @@ eureka:
       defaultZone: http://localhost:9200/eureka
 
 zuul:
+  prefix: /api
+  ignoredServices: '*'
   routes:
     user-service:
       path: /users/**
       service-id: USER-SERVICE
-      stripPrefix: false
-      sensitive-headers: Cookie,Set-Cookie
     auth-service:
       path: /auth/**
       service-id: AUTH-SERVICE
-      stripPrefix: false
-      sensitive-headers: Cookie,Set-Cookie
     cart-service:
       path: /carts/**
       service-id: CART-SERVICE
-      stripPrefix: false
-      sensitive-headers: Cookie,Set-Cookie
     product-service:
       path: /products/**
       service-id: PRODUCT-SERVICE
-      stripPrefix: false
-      sensitive-headers: Cookie,Set-Cookie
     keyword-service:
       path: /keywords/**
       service-id: PRODUCT-SERVICE
-      stripPrefix: false
-      sensitive-headers: Cookie,Set-Cookie
     category-service:
       path: /categories/**
       service-id: PRODUCT-SERVICE
-      stripPrefix: false
-      sensitive-headers: Cookie,Set-Cookie
-    web-service:
-      path: /**
-      service-id: WEB-SERVICE
-      stripPrefix: false
-      sensitive-headers: Cookie,Set-Cookie

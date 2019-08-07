@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -98,7 +99,7 @@ public class ProductController {
         return product;
     }
 
-    @GetMapping("/keyword/{keywordId}")
+    @GetMapping("/keywords/{keywordId}")
     @ApiOperation("Gets all products with given keyword.")
     public List<Product> findByKeyword (@ApiParam("Id of the keyword. Cannot be empty.")
                                             @PathVariable Long keywordId) {
@@ -106,7 +107,7 @@ public class ProductController {
         return productRepository.findByKeywords_id(keywordId);
     }
 
-    @GetMapping("/category/{categoryId}")
+    @GetMapping("/categories/{categoryId}")
     @ApiOperation("Gets all products with given category.")
     public List<Product> findByCategory (@ApiParam("Id of the category. Cannot be empty.")
                                              @PathVariable Long categoryId) {

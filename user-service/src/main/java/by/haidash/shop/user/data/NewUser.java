@@ -1,6 +1,6 @@
 package by.haidash.shop.user.data;
 
-public class UserDto {
+public class NewUser {
 
     private String email;
     private String psw;

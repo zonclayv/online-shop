@@ -30,6 +30,12 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, jwtConfig.getLoginUri()).permitAll()
                 .antMatchers(HttpMethod.POST, jwtConfig.getSigninUri()).permitAll()
+                .antMatchers(HttpMethod.GET, "/**/v2/api-docs",
+                        "/**/configuration/ui",
+                        "/**/swagger-resources",
+                        "/**/configuration/security",
+                        "/**/swagger-ui.html",
+                        "/**/webjars/**").permitAll()
                 .anyRequest().authenticated();
     }
 }
