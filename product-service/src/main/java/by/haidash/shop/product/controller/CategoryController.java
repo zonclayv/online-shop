@@ -1,6 +1,5 @@
 package by.haidash.shop.product.controller;
 
-import by.haidash.shop.product.data.CategoryDto;
 import by.haidash.shop.product.entity.Category;
 import by.haidash.shop.product.exception.CategoryNotFoundException;
 import by.haidash.shop.product.repository.CategoryRepository;
@@ -42,12 +41,7 @@ public class CategoryController {
     @PostMapping("/")
     @ApiOperation("Creates a new category.")
     public Category addCategory(@ApiParam("Category information for a new category to be created.")
-                                    @RequestBody CategoryDto dto){
-
-        Category category = new Category();
-        category.setName(dto.getName());
-        category.setParent(dto.getParent());
-
+                                    @RequestBody Category category){
         return categoryRepository.save(category);
     }
 

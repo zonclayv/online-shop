@@ -1,6 +1,5 @@
 package by.haidash.shop.product.controller;
 
-import by.haidash.shop.product.data.ProductDto;
 import by.haidash.shop.product.entity.Category;
 import by.haidash.shop.product.entity.Keyword;
 import by.haidash.shop.product.entity.Product;
@@ -54,14 +53,9 @@ public class ProductController {
     @PostMapping("/")
     @ApiOperation("Creates a new product.")
     public Product addProduct(@ApiParam("Product information for a new product to be created.")
-                                  @RequestBody ProductDto dto){
+                                  @RequestBody Product product){
 
-        Product product = new Product();
-        product.setName(dto.getName());
-        product.setKeywords(dto.getKeywords());
-        product.setCategories(dto.getCategories());
-
-        return productRepository.save(product);
+         return productRepository.save(product);
     }
 
     @PutMapping("/{productId}/keywords/{keywordId}")
