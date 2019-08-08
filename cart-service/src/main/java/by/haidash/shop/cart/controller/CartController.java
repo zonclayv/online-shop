@@ -39,6 +39,13 @@ public class CartController {
         return getCart(request, cartId);
     }
 
+    @PostMapping("/")
+    @ApiOperation("Creates new cart.")
+    public Cart createCart(@ApiParam("Cart information for a new cart to be created.")
+                            @RequestBody Cart cart) {
+        return cartRepository.save(cart);
+    }
+
     @PutMapping("/{cartId}/products/{productId}/{quantity}")
     @ApiOperation("Adds a given product with provided quantity to the specific cart by their identifier.")
     public Cart addProduct(HttpServletRequest request,
