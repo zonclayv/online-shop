@@ -1,25 +1,17 @@
-package by.haidash.shop.security.data;
+package by.haidash.shop.security.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
-public class JwtConfig {
+@Component
+@ConfigurationProperties(prefix = "security.jwt")
+public class JwtConfiguration {
 
-    @Value("${security.jwt.loginUri:/auth/**}")
     private String loginUri;
-
-    @Value("${security.jwt.signinUri:/**/signin/**}")
     private String signinUri;
-
-    @Value("${security.jwt.header:Authorization}")
     private String header;
-
-    @Value("${security.jwt.prefix:Bearer }")
     private String prefix;
-
-    @Value("${security.jwt.expiration:#{24*60*60}}")
     private int expiration;
-
-    @Value("${security.jwt.secret:JwtSecretKey}")
     private String secret;
 
     public String getSigninUri() {

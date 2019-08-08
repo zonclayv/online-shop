@@ -1,6 +1,6 @@
-package by.haidash.shop.security.util;
+package by.haidash.shop.security.parser;
 
-import by.haidash.shop.security.data.JwtConfig;
+import by.haidash.shop.security.configuration.JwtConfiguration;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,23 +10,27 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Component
-public class JwtUtil {
+public class JwtParser {
+
+    private final JwtConfiguration jwtConfiguration;
 
     @Autowired
-    private JwtConfig jwtConfig;
+    public JwtParser(JwtConfiguration jwtConfiguration) {
+        this.jwtConfiguration = jwtConfiguration;
+    }
 
     public Optional<Long> parseUserId(HttpServletRequest request) {
 
-        String header = request.getHeader(jwtConfig.getHeader());
-        if(header == null || !header.startsWith(jwtConfig.getPrefix())) {
+        String header = request.getHeader(jwtConfiguration.getHeader());
+        if(header == null || !header.startsWith(jwtConfiguration.getPrefix())) {
             return Optional.empty();
         }
 
-        String token = header.replace(jwtConfig.getPrefix(), "");
+        String token = header.replace(jwtConfiguration.getPrefix(), "");
 
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey(jwtConfig.getSecret().getBytes())
+                    .setSigningKey(jwtConfiguration.getSecret().getBytes())
                     .parseClaimsJws(token)
                     .getBody();
 

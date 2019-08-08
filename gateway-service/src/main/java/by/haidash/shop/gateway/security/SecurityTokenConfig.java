@@ -2,9 +2,8 @@ package by.haidash.shop.gateway.security;
 
 import javax.servlet.http.HttpServletResponse;
 
-import by.haidash.shop.security.data.JwtConfig;
+import by.haidash.shop.security.configuration.JwtConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private JwtConfig jwtConfig;
+    private JwtConfiguration jwtConfiguration;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -26,10 +25,10 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
-                .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfiguration), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, jwtConfig.getLoginUri()).permitAll()
-                .antMatchers(HttpMethod.POST, jwtConfig.getSigninUri()).permitAll()
+                .antMatchers(HttpMethod.POST, jwtConfiguration.getLoginUri()).permitAll()
+                .antMatchers(HttpMethod.POST, jwtConfiguration.getSigninUri()).permitAll()
                 .antMatchers(HttpMethod.GET, "/**/v2/api-docs",
                         "/**/configuration/ui",
                         "/**/swagger-resources",

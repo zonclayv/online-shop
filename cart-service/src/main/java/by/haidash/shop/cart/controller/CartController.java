@@ -2,7 +2,7 @@ package by.haidash.shop.cart.controller;
 
 import by.haidash.shop.cart.exception.PermissionDeniedException;
 import by.haidash.shop.security.exception.WrongAuthenticationTokenException;
-import by.haidash.shop.security.util.JwtUtil;
+import by.haidash.shop.security.parser.JwtParser;
 import by.haidash.shop.cart.entity.Cart;
 import by.haidash.shop.cart.entity.OrderProduct;
 import by.haidash.shop.cart.exception.CartNotFoundException;
@@ -22,13 +22,13 @@ import java.util.Objects;
 @Api(description = "Set of endpoints for creating, retrieving and updating of cart.")
 public class CartController {
 
-    private final JwtUtil jwtUtil;
+    private final JwtParser jwtParser;
     private final CartRepository cartRepository;
 
     @Autowired
-    public CartController(CartRepository cartRepository, JwtUtil jwtUtil) {
+    public CartController(CartRepository cartRepository, JwtParser jwtParser) {
         this.cartRepository = cartRepository;
-        this.jwtUtil = jwtUtil;
+        this.jwtParser = jwtParser;
     }
 
     @GetMapping("/{cartId}")
@@ -114,7 +114,7 @@ public class CartController {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new CartNotFoundException("Cart with id '" + cartId + "' not fount"));
 
-        Long userId = jwtUtil.parseUserId(request)
+        Long userId = jwtParser.parseUserId(request)
                 .orElseThrow(() -> new WrongAuthenticationTokenException("Wrong authentication token"));
 
         if (Objects.equals(cart.getUser(), userId)) {

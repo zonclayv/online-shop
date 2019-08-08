@@ -1,6 +1,6 @@
 package by.haidash.shop.gateway.security;
 
-import by.haidash.shop.security.data.JwtConfig;
+import by.haidash.shop.security.configuration.JwtConfiguration;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,28 +17,28 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
-    private final JwtConfig jwtConfig;
+    private final JwtConfiguration jwtConfiguration;
 
-    public JwtTokenAuthenticationFilter(JwtConfig jwtConfig) {
-        this.jwtConfig = jwtConfig;
+    public JwtTokenAuthenticationFilter(JwtConfiguration jwtConfiguration) {
+        this.jwtConfiguration = jwtConfiguration;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        String header = request.getHeader(jwtConfig.getHeader());
-        if(header == null || !header.startsWith(jwtConfig.getPrefix())) {
+        String header = request.getHeader(jwtConfiguration.getHeader());
+        if(header == null || !header.startsWith(jwtConfiguration.getPrefix())) {
             chain.doFilter(request, response);
             return;
         }
 
-        String token = header.replace(jwtConfig.getPrefix(), "");
+        String token = header.replace(jwtConfiguration.getPrefix(), "");
 
         try {
 
             Claims claims = Jwts.parser()
-                    .setSigningKey(jwtConfig.getSecret().getBytes())
+                    .setSigningKey(jwtConfiguration.getSecret().getBytes())
                     .parseClaimsJws(token)
                     .getBody();
 

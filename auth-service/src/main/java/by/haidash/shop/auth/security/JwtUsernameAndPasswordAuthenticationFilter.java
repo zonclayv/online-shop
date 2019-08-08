@@ -1,7 +1,7 @@
 package by.haidash.shop.auth.security;
 
 import by.haidash.shop.auth.repository.InternalUserRepository;
-import by.haidash.shop.security.data.JwtConfig;
+import by.haidash.shop.security.configuration.JwtConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -27,17 +27,17 @@ import java.util.stream.Collectors;
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authManager;
-    private final JwtConfig jwtConfig;
+    private final JwtConfiguration jwtConfiguration;
     private final InternalUserRepository userRepository;
 
     public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager,
-                                                      JwtConfig jwtConfig,
+                                                      JwtConfiguration jwtConfiguration,
                                                       InternalUserRepository userRepository) {
         this.authManager = authManager;
-        this.jwtConfig = jwtConfig;
+        this.jwtConfiguration = jwtConfiguration;
         this.userRepository = userRepository;
 
-        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(jwtConfig.getLoginUri(), "POST"));
+        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(jwtConfiguration.getLoginUri(), "POST"));
     }
 
     @Override
@@ -70,11 +70,11 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                         .orElseThrow(() -> new UsernameNotFoundException("User not found"))
                         .getId())
                 .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + jwtConfig.getExpiration() * 1000))  // in milliseconds
-                .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
+                .setExpiration(new Date(now + jwtConfiguration.getExpiration() * 1000))  // in milliseconds
+                .signWith(SignatureAlgorithm.HS512, jwtConfiguration.getSecret().getBytes())
                 .compact();
 
-        response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
+        response.addHeader(jwtConfiguration.getHeader(), jwtConfiguration.getPrefix() + token);
     }
 
     private static class UserCredentials {

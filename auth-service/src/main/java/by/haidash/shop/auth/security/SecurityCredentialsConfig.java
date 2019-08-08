@@ -1,7 +1,7 @@
 package by.haidash.shop.auth.security;
 
 import by.haidash.shop.auth.repository.InternalUserRepository;
-import by.haidash.shop.security.data.JwtConfig;
+import by.haidash.shop.security.configuration.JwtConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
     private InternalUserRepository userRepository;
 
     @Autowired
-    private JwtConfig jwtConfig;
+    private JwtConfiguration jwtConfiguration;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,21 +37,16 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, userRepository))
+                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfiguration, userRepository))
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, jwtConfig.getLoginUri()).permitAll()
-                .antMatchers(HttpMethod.POST, jwtConfig.getSigninUri()).permitAll()
+                .antMatchers(HttpMethod.POST, jwtConfiguration.getLoginUri()).permitAll()
+                .antMatchers(HttpMethod.POST, jwtConfiguration.getSigninUri()).permitAll()
                 .anyRequest().authenticated();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
-
-    @Bean
-    public JwtConfig jwtConfig() {
-        return new JwtConfig();
     }
 
     @Bean

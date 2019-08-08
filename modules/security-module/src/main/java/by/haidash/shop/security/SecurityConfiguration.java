@@ -1,14 +1,11 @@
 package by.haidash.shop.security;
 
-import by.haidash.shop.security.data.JwtConfig;
-import org.springframework.context.annotation.Bean;
+import by.haidash.shop.security.configuration.JwtConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableConfigurationProperties(JwtConfiguration.class)
 public class SecurityConfiguration {
 
-    @Bean
-    public JwtConfig jwtConfig() {
-        return new JwtConfig();
-    }
 }
