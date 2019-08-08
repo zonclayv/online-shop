@@ -5,7 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+        "by.haidash.shop.product",
+        "by.haidash.shop.swagger"})
 public class ProductServiceApp {
     public static void main(String[] args) {
         SpringApplication.run(ProductServiceApp.class, args);
