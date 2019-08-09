@@ -3,19 +3,24 @@ package by.haidash.shop.user.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
 
-    private @Id @GeneratedValue Long id;
-    private @Column(unique = true) String email;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true)
+    private String email;
+
     private String psw;
+
     private String firstName;
+
     private String lastName;
+
     private String phone;
 
     public Long getId() {
