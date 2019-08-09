@@ -1,24 +1,14 @@
 package by.haidash.shop.product.entity;
 
+import by.haidash.shop.jpa.entity.BaseEntity;
+
 import javax.persistence.*;
 
 @Entity
-public class Keyword {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Keyword extends BaseEntity<Long> {
 
     @Column(unique = true)
     private String name;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

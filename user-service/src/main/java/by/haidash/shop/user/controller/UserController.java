@@ -25,7 +25,7 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping("/")
+    @GetMapping
     @ApiOperation("Returns list of all users.")
     public List<User> all() {
         return userRepository.findAll();
@@ -39,7 +39,7 @@ public class UserController {
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation("Registration of new user.")
     public User register(@ApiParam("User information for a new user to be created.")
                              @RequestBody NewUser newUser){

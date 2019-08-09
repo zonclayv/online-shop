@@ -1,5 +1,7 @@
 package by.haidash.shop.user;
 
+import by.haidash.shop.jpa.JpaModule;
+import by.haidash.shop.swagger.SwaggerModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -8,12 +10,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableDiscoveryClient
-@SpringBootApplication(scanBasePackages = {
-        "by.haidash.shop.user",
-        "by.haidash.shop.swagger"})
+@SpringBootApplication
 public class UserServiceApp {
+
     public static void main(String[] args) {
-        SpringApplication.run(UserServiceApp.class, args);
+        Class[] sources = {
+                UserServiceApp.class,
+                SwaggerModule.class,
+                JpaModule.class
+        };
+
+        SpringApplication.run(sources, args);
     }
 
     @Bean

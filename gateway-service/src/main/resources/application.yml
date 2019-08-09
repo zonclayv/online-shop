@@ -1,11 +1,11 @@
-# Spring properties
 spring:
   application:
-     name: gateway-service  # Service registers under this name
+     name: gateway-service
   main:
     allow-bean-definition-overriding: true
 
-server.port: 9206   # HTTP (Tomcat) port
+server:
+  port: 9206
 
 eureka:
   client:
@@ -13,24 +13,29 @@ eureka:
       defaultZone: http://localhost:9200/eureka
 
 zuul:
-  prefix: /api
   ignoredServices: '*'
   routes:
     user-service:
       path: /users/**
       service-id: USER-SERVICE
+      strip-prefix: false
     auth-service:
       path: /auth/**
       service-id: AUTH-SERVICE
+      strip-prefix: false
     cart-service:
       path: /carts/**
       service-id: CART-SERVICE
+      strip-prefix: false
     product-service:
       path: /products/**
       service-id: PRODUCT-SERVICE
+      strip-prefix: false
     keyword-service:
       path: /keywords/**
       service-id: PRODUCT-SERVICE
+      strip-prefix: false
     category-service:
       path: /categories/**
       service-id: PRODUCT-SERVICE
+      strip-prefix: false

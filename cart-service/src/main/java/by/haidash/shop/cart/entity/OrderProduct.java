@@ -1,27 +1,17 @@
 package by.haidash.shop.cart.entity;
 
+import by.haidash.shop.jpa.entity.BaseEntity;
+
 import javax.persistence.*;
 
 @Entity
-public class OrderProduct {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class OrderProduct extends BaseEntity<Long> {
 
     @Column(nullable = false)
     private Long product;
 
     @Column(nullable = false)
     private Integer quantity;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getProduct() {
         return product;

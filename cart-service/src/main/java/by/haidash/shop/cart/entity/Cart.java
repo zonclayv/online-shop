@@ -1,15 +1,13 @@
 package by.haidash.shop.cart.entity;
 
+import by.haidash.shop.jpa.entity.BaseEntity;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Cart {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Cart extends BaseEntity<Long> {
 
     @Column(nullable = false)
     private Long user;
@@ -17,14 +15,6 @@ public class Cart {
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "cart_products")
     private List<OrderProduct> products = new ArrayList<>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getUser() {
         return user;

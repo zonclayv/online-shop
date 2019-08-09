@@ -1,14 +1,20 @@
 package by.haidash.shop.auth;
 
+import by.haidash.shop.jpa.JpaModule;
+import by.haidash.shop.security.SecurityModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = {
-        "by.haidash.shop.auth",
-        "by.haidash.shop.security"})
+@SpringBootApplication
 public class AuthServiceApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthServiceApp.class, args);
+        Class[] sources = {
+                AuthServiceApp.class,
+                SecurityModule.class,
+                JpaModule.class
+        };
+
+        SpringApplication.run(sources, args);
     }
 }

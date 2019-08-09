@@ -1,12 +1,8 @@
-# Spring properties
 spring:
   application:
-     name: cart-service  # Service registers under this name
+     name: cart-service
   main:
     allow-bean-definition-overriding: true
-  jpa:
-    hibernate:
-      ddl-auto: update
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB:shop_online}
     username: ${MYSQL_USER:user}
@@ -14,12 +10,11 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
 
-server.port: 9204   # HTTP (Tomcat) port
+server:
+  port: 9204
 
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:9200/eureka
-
-logging.level.org.springframework.security: DEBUG
 

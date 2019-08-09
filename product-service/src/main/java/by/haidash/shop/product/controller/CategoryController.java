@@ -23,7 +23,7 @@ public class CategoryController {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping
     @ApiOperation("Returns list of all categories.")
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
@@ -38,7 +38,7 @@ public class CategoryController {
                 .orElseThrow(() -> new CategoryNotFoundException(id));
     }
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation("Creates a new category.")
     public Category addCategory(@ApiParam("Category information for a new category to be created.")
                                     @RequestBody Category category){

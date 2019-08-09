@@ -1,16 +1,13 @@
 package by.haidash.shop.user.entity;
 
+import by.haidash.shop.jpa.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 @Entity
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends BaseEntity<Long>{
 
     @Column(unique = true)
     private String email;
@@ -22,14 +19,6 @@ public class User {
     private String lastName;
 
     private String phone;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;
@@ -79,7 +68,8 @@ public class User {
 
         User user = (User) o;
 
-        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        Long id = getId();
+        if (id != null ? !id.equals(user.getId()) : user.getId() != null) return false;
         if (!email.equals(user.email)) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
@@ -88,6 +78,7 @@ public class User {
 
     @Override
     public int hashCode() {
+        Long id = getId();
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + email.hashCode();
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);

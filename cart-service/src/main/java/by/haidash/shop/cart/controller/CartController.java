@@ -39,7 +39,7 @@ public class CartController {
         return getCart(request, cartId);
     }
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation("Creates new cart.")
     public Cart createCart(@ApiParam("Cart information for a new cart to be created.")
                             @RequestBody Cart cart) {

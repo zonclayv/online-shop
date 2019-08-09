@@ -1,15 +1,13 @@
 package by.haidash.shop.product.entity;
 
+import by.haidash.shop.jpa.entity.BaseEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
+public class Product extends BaseEntity<Long> {
 
     private String name;
 
@@ -22,14 +20,6 @@ public class Product {
     @ManyToMany
     @JoinColumn(name = "product_categories")
     private List<Category> categories;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

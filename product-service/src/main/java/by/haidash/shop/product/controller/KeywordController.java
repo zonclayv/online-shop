@@ -24,7 +24,7 @@ public class KeywordController {
         this.keywordRepository = keywordRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping
     @ApiOperation("Returns list of all keywords.")
     public List<Keyword> getAllKeywords() {
         return keywordRepository.findAll();
@@ -39,7 +39,7 @@ public class KeywordController {
                 .orElseThrow(() -> new KeywordNotFoundException(id));
     }
 
-    @PostMapping("")
+    @PostMapping
     @ApiOperation("Creates a new keyword.")
     public Keyword addKeyword(@ApiParam("Name of a new keyword to be created.")
                                   @RequestBody String keywordName){

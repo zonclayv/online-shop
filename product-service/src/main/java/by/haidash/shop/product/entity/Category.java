@@ -1,27 +1,16 @@
 package by.haidash.shop.product.entity;
 
+import by.haidash.shop.jpa.entity.BaseEntity;
+
 import javax.persistence.*;
 
 @Entity
-public class Category {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Category extends BaseEntity<Long> {
 
     private String name;
 
     @ManyToOne
     private Category parent;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }

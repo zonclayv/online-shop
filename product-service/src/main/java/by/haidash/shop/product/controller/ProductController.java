@@ -36,7 +36,7 @@ public class ProductController {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping
     @ApiOperation("Returns list of all products.")
     public List<Product> getAllProducts() {
         return productRepository.findAll();
@@ -51,7 +51,7 @@ public class ProductController {
                 .orElseThrow(() -> new ProductNotFoundException(id));
     }
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation("Creates a new product.")
     public Product addProduct(@ApiParam("Product information for a new product to be created.")
                                   @RequestBody Product product){

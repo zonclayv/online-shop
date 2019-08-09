@@ -1,15 +1,21 @@
 package by.haidash.shop.product;
 
+import by.haidash.shop.jpa.JpaModule;
+import by.haidash.shop.swagger.SwaggerModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient
-@SpringBootApplication(scanBasePackages = {
-        "by.haidash.shop.product",
-        "by.haidash.shop.swagger"})
+@SpringBootApplication
 public class ProductServiceApp {
     public static void main(String[] args) {
-        SpringApplication.run(ProductServiceApp.class, args);
+        Class[] sources = {
+                ProductServiceApp.class,
+                SwaggerModule.class,
+                JpaModule.class
+        };
+
+        SpringApplication.run(sources, args);
     }
 }
