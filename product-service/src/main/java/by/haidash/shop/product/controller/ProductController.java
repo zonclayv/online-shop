@@ -79,7 +79,7 @@ public class ProductController {
         return product;
     }
 
-    @PutMapping("/{productId}/category/{categoryId}")
+    @PutMapping("/{productId}/categories/{categoryId}")
     @ApiOperation("Adds category for given product. 404 if category does not exist.")
     public Product addCategory(@ApiParam("Id of the product. Cannot be empty.")
                                   @PathVariable Long productId,
@@ -101,7 +101,7 @@ public class ProductController {
 
     @GetMapping("/keywords/{keywordId}")
     @ApiOperation("Gets all products with given keyword.")
-    public List<Product> findByKeyword (@ApiParam("Id of the keyword. Cannot be empty.")
+    public List<Product> findByKeyword(@ApiParam("Id of the keyword. Cannot be empty.")
                                             @PathVariable Long keywordId) {
 
         return productRepository.findByKeywords_id(keywordId);
@@ -109,7 +109,7 @@ public class ProductController {
 
     @GetMapping("/categories/{categoryId}")
     @ApiOperation("Gets all products with given category.")
-    public List<Product> findByCategory (@ApiParam("Id of the category. Cannot be empty.")
+    public List<Product> findByCategory(@ApiParam("Id of the category. Cannot be empty.")
                                              @PathVariable Long categoryId) {
 
         return productRepository.findByCategories_id(categoryId);
