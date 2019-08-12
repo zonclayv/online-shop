@@ -1,10 +1,9 @@
 package by.haidash.shop.auth.security;
 
 import by.haidash.shop.auth.repository.InternalUserRepository;
-import by.haidash.shop.security.configuration.JwtConfiguration;
+import by.haidash.shop.jwt.configuration.JwtConfiguration;
+import by.haidash.shop.jwt.provider.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -29,13 +28,16 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     private final AuthenticationManager authManager;
     private final JwtConfiguration jwtConfiguration;
     private final InternalUserRepository userRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager,
                                                       JwtConfiguration jwtConfiguration,
-                                                      InternalUserRepository userRepository) {
+                                                      InternalUserRepository userRepository,
+                                                      JwtTokenProvider jwtTokenProvider) {
         this.authManager = authManager;
         this.jwtConfiguration = jwtConfiguration;
         this.userRepository = userRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
 
         this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(jwtConfiguration.getLoginUri(), "POST"));
     }
@@ -60,21 +62,17 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
 
-        Long now = System.currentTimeMillis();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
-        String token = Jwts.builder()
-                .setSubject(auth.getName())
-                .claim("authorities", auth.getAuthorities().stream()
-                        .map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-                .claim("userId", userRepository.findByEmail(userDetails.getUsername())
-                        .orElseThrow(() -> new UsernameNotFoundException("User not found"))
-                        .getId())
-                .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + jwtConfiguration.getExpiration() * 1000))  // in milliseconds
-                .signWith(SignatureAlgorithm.HS512, jwtConfiguration.getSecret().getBytes())
-                .compact();
+        Long userId = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"))
+                .getId();
+        List<String> authorities = auth.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
 
-        response.addHeader(jwtConfiguration.getHeader(), jwtConfiguration.getPrefix() + token);
+        String token = jwtTokenProvider.createToken(auth.getName(), userId, authorities);
+        response.addHeader(jwtConfiguration.getHeader(), token);
     }
 
     private static class UserCredentials {

@@ -1,4 +1,4 @@
-package by.haidash.shop.security.exception;
+package by.haidash.shop.jwt.exception;
 
 public class WrongAuthenticationTokenException extends RuntimeException {
 

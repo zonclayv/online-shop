@@ -1,6 +1,6 @@
-package by.haidash.shop.security.advice;
+package by.haidash.shop.jwt.advice;
 
-import by.haidash.shop.security.exception.WrongAuthenticationTokenException;
+import by.haidash.shop.jwt.exception.WrongAuthenticationTokenException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

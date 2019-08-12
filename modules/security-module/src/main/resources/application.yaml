@@ -1,8 +1,0 @@
-security:
-  jwt:
-    loginUri: /auth/**
-    signinUri: /**/signin/**
-    header: Authorization
-    prefix: "Bearer "
-    expiration: 300000 # 5 minutes duration by default: 5 minutes * 60 seconds * 1000 miliseconds
-    secret: JwtSecretKey

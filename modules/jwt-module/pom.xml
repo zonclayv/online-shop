@@ -11,10 +11,10 @@
     </parent>
 
     <groupId>by.haidash.shop</groupId>
-    <artifactId>security-module</artifactId>
+    <artifactId>jwt-module</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>security-module</name>
+    <name>jwt-module</name>
 
     <properties>
         <java.version>1.8</java.version>

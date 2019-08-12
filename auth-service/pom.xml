@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>by.haidash.shop</groupId>
-            <artifactId>security-module</artifactId>
+            <artifactId>jwt-module</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

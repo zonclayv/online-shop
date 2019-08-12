@@ -1,7 +1,8 @@
 package by.haidash.shop.auth.security;
 
 import by.haidash.shop.auth.repository.InternalUserRepository;
-import by.haidash.shop.security.configuration.JwtConfiguration;
+import by.haidash.shop.jwt.configuration.JwtConfiguration;
+import by.haidash.shop.jwt.provider.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -14,20 +15,27 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.servlet.http.HttpServletResponse;
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
 @EnableWebSecurity
 public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    @Qualifier("basicUserDetailsService")
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+    private final InternalUserRepository userRepository;
+    private final JwtConfiguration jwtConfiguration;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    private InternalUserRepository userRepository;
+    public SecurityCredentialsConfig(@Qualifier("basicUserDetailsService") UserDetailsService userDetailsService,
+                                     InternalUserRepository userRepository,
+                                     JwtConfiguration jwtConfiguration,
+                                     JwtTokenProvider jwtTokenProvider) {
 
-    @Autowired
-    private JwtConfiguration jwtConfiguration;
+        this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
+        this.jwtConfiguration = jwtConfiguration;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -35,9 +43,12 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+                .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(SC_UNAUTHORIZED))
                 .and()
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfiguration, userRepository))
+                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(),
+                        jwtConfiguration,
+                        userRepository,
+                        jwtTokenProvider))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, jwtConfiguration.getLoginUri()).permitAll()
                 .antMatchers(HttpMethod.POST, jwtConfiguration.getSigninUri()).permitAll()
