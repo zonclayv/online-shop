@@ -1,4 +1,4 @@
-package by.haidash.shop.gateway.security;
+package by.haidash.shop.security.web;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

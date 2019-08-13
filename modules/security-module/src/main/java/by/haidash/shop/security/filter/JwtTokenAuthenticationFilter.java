@@ -1,4 +1,4 @@
-package by.haidash.shop.gateway.security;
+package by.haidash.shop.security.filter;
 
 import by.haidash.shop.security.model.UserPrincipal;
 import by.haidash.shop.security.service.JwtTokenService;

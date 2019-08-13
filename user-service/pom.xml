@@ -39,6 +39,11 @@
             <artifactId>jpa-module</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>by.haidash.shop</groupId>
+            <artifactId>security-module</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

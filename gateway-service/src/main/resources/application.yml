@@ -14,6 +14,7 @@ eureka:
 
 zuul:
   ignoredServices: '*'
+  sensitiveHeaders: Cookie,Set-Cookie
   routes:
     user-service:
       path: /users/**

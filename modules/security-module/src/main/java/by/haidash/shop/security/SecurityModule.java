@@ -7,8 +7,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication
 @EnableConfigurationProperties(JwtConfiguration.class)
-public class JwtModule {
+public class SecurityModule {
     public static void main(String[] args) {
-        SpringApplication.run(JwtModule.class, args);
+        SpringApplication.run(SecurityModule.class, args);
     }
 }
