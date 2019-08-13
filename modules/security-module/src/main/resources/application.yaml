@@ -1,6 +1,6 @@
 jwt:
   loginUri: /auth/**
-  signinUri: /**/signin/**
+  registrationUri: /**/signin/**
   header: Authorization
   prefix: "Bearer "
   expiration: 300000 # 5 minutes duration by default: 5 minutes * 60 seconds * 1000 miliseconds

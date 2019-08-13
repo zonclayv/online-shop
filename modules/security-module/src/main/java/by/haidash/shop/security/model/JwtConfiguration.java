@@ -4,23 +4,23 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "security")
+@ConfigurationProperties(prefix = "jwt")
 public class JwtConfiguration {
 
     private String loginUri;
-    private String signinUri;
+    private String registrationUri;
     private String header;
     private String prefix;
     private int expiration;
     private String publicKey;
     private String privateKey;
 
-    public String getSigninUri() {
-        return signinUri;
+    public String getRegistrationUri() {
+        return registrationUri;
     }
 
-    public void setSigninUri(String signinUri) {
-        this.signinUri = signinUri;
+    public void setRegistrationUri(String registrationUri) {
+        this.registrationUri = registrationUri;
     }
 
     public String getLoginUri() {

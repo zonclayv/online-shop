@@ -1,12 +1,13 @@
 package by.haidash.shop.security.service;
 
 import by.haidash.shop.security.model.JwtConfiguration;
-import by.haidash.shop.security.exception.WrongAuthenticationTokenException;
 import by.haidash.shop.security.model.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class JwtTokenService {
         this.publicKey = getPublicKey(jwtConfiguration.getPublicKey());
     }
 
-    public String createToken(String username, Long userId, Set<String> authorities, Key key) {
+    public String createToken(String username, Long userId, List<String> authorities, Key key) {
 
         Long now = System.currentTimeMillis();
         String token = Jwts.builder()
@@ -56,7 +57,7 @@ public class JwtTokenService {
 
         String header = request.getHeader(jwtConfiguration.getHeader());
         if (header == null || !header.startsWith(jwtConfiguration.getPrefix())) {
-            throw new WrongAuthenticationTokenException("Wrong authentication token.");
+            throw new BadCredentialsException("Wrong authentication token.");
         }
 
         String token = header.replace(jwtConfiguration.getPrefix(), "");
@@ -66,9 +67,8 @@ public class JwtTokenService {
                 .getBody();
 
         if (claims == null){
-            throw new WrongAuthenticationTokenException("Wrong authentication token.");
+            throw new BadCredentialsException("Wrong authentication token.");
         }
-
 
         @SuppressWarnings("unchecked")
         List<String> authorities = claims.get("authorities", List.class);
@@ -97,7 +97,7 @@ public class JwtTokenService {
                     .generatePublic(spec);
 
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new WrongAuthenticationTokenException("An error occurred while parsing the public key.", e);
+            throw new AuthenticationServiceException("An error occurred while parsing the public key.", e);
         }
     }
 
@@ -115,7 +115,7 @@ public class JwtTokenService {
                     .generatePrivate(spec);
 
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new WrongAuthenticationTokenException("An error occurred while parsing the private key.", e);
+            throw new AuthenticationServiceException("An error occurred while parsing the private key.", e);
         }
     }
 }
