@@ -1,6 +1,6 @@
-package by.haidash.shop.jwt;
+package by.haidash.shop.security;
 
-import by.haidash.shop.jwt.configuration.JwtConfiguration;
+import by.haidash.shop.security.model.JwtConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

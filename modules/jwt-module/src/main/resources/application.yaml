@@ -1,7 +1,0 @@
-jwt:
-  loginUri: /auth/**
-  signinUri: /**/signin/**
-  header: Authorization
-  prefix: "Bearer "
-  expiration: 300000 # 5 minutes duration by default: 5 minutes * 60 seconds * 1000 miliseconds
-  publicKey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDrmjl8F726re2Q0rfvTd4BSik2s+FMF2wEm6RR38pkEZxZ2q5C2/JpdNW2rS+z9/z9dTkd9p3VAK1jQCMb2oE3TD48XpQPf/dqYdmsy4pYi3DRTfWKbyCRRx9NwxEcHKhw5dDW8gofKaBPqvLdDsc+zCi0P1WZgnjtlZNHBuA4f487oRgm/989umTClh3EX2cucmQgGC3CSxVppQW++Ok+dW/Ej3V6WnA2Hmny3aNeYKdzo++BD2esxL+5gxPSzN3+v1BjQB0M0bj6EGbHypDUgZdrv7obgkqF9ycvMKXasPiAKFw4NIVO83ojdTabz4PiGR2jY7ACI1TMwXNK6RaL

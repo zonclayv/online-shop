@@ -1,16 +1,14 @@
 package by.haidash.shop.auth.security;
 
-import by.haidash.shop.auth.repository.InternalUserRepository;
-import by.haidash.shop.jwt.configuration.JwtConfiguration;
-import by.haidash.shop.jwt.provider.JwtTokenProvider;
+import by.haidash.shop.security.model.JwtConfiguration;
+import by.haidash.shop.security.model.UserPrincipal;
+import by.haidash.shop.security.service.JwtTokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -19,25 +17,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Key;
 import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authManager;
     private final JwtConfiguration jwtConfiguration;
-    private final InternalUserRepository userRepository;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenService jwtTokenService;
+    private final Key signKey;
 
     public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager,
                                                       JwtConfiguration jwtConfiguration,
-                                                      InternalUserRepository userRepository,
-                                                      JwtTokenProvider jwtTokenProvider) {
+                                                      JwtTokenService jwtTokenService) {
         this.authManager = authManager;
         this.jwtConfiguration = jwtConfiguration;
-        this.userRepository = userRepository;
-        this.jwtTokenProvider = jwtTokenProvider;
+        this.jwtTokenService = jwtTokenService;
+
+        this.signKey = jwtTokenService.getPrivateKey(jwtConfiguration.getPrivateKey());
 
         this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(jwtConfiguration.getLoginUri(), "POST"));
     }
@@ -50,7 +48,9 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
             UserCredentials creds = new ObjectMapper().readValue(request.getInputStream(), UserCredentials.class);
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    creds.getUsername(), creds.getPassword(), Collections.emptyList());
+                    creds.getUsername(),
+                    creds.getPassword(),
+                    Collections.emptyList());
 
             return authManager.authenticate(authToken);
         } catch (IOException e) {
@@ -62,20 +62,19 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
 
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
-        Long userId = userRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"))
-                .getId();
-        List<String> authorities = auth.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+        UserPrincipal userPrincipal = (UserPrincipal) auth.getPrincipal();
+        Set<String> authorities = AuthorityUtils.authorityListToSet(auth.getAuthorities());
 
-        String token = jwtTokenProvider.createToken(auth.getName(), userId, authorities);
+        String token = jwtTokenService.createToken(
+                userPrincipal.getUsername(),
+                userPrincipal.getId(),
+                authorities,
+                signKey);
+
         response.addHeader(jwtConfiguration.getHeader(), token);
     }
 
-    private static class UserCredentials {
+    private final static class UserCredentials {
         private String username, password;
 
         public String getUsername() {

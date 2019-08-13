@@ -6,4 +6,11 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
+    <changeSet author="haidash" id="2">
+        <insert tableName="order_product">
+            <column name="id" valueNumeric="1"/>
+            <column name="product" value="1"/>
+            <column name="quantity" value="10"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

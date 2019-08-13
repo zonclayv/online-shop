@@ -1,7 +1,7 @@
 package by.haidash.shop.auth;
 
 import by.haidash.shop.jpa.JpaModule;
-import by.haidash.shop.jwt.JwtModule;
+import by.haidash.shop.security.JwtModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

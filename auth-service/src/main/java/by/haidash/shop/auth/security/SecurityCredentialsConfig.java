@@ -1,8 +1,7 @@
 package by.haidash.shop.auth.security;
 
-import by.haidash.shop.auth.repository.InternalUserRepository;
-import by.haidash.shop.jwt.configuration.JwtConfiguration;
-import by.haidash.shop.jwt.provider.JwtTokenProvider;
+import by.haidash.shop.security.model.JwtConfiguration;
+import by.haidash.shop.security.service.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -21,20 +20,17 @@ import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
-    private final InternalUserRepository userRepository;
     private final JwtConfiguration jwtConfiguration;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenService jwtTokenService;
 
     @Autowired
     public SecurityCredentialsConfig(@Qualifier("basicUserDetailsService") UserDetailsService userDetailsService,
-                                     InternalUserRepository userRepository,
                                      JwtConfiguration jwtConfiguration,
-                                     JwtTokenProvider jwtTokenProvider) {
+                                     JwtTokenService jwtTokenService) {
 
         this.userDetailsService = userDetailsService;
-        this.userRepository = userRepository;
         this.jwtConfiguration = jwtConfiguration;
-        this.jwtTokenProvider = jwtTokenProvider;
+        this.jwtTokenService = jwtTokenService;
     }
 
     @Override
@@ -47,8 +43,7 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(),
                         jwtConfiguration,
-                        userRepository,
-                        jwtTokenProvider))
+                        jwtTokenService))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, jwtConfiguration.getLoginUri()).permitAll()
                 .antMatchers(HttpMethod.POST, jwtConfiguration.getSigninUri()).permitAll()

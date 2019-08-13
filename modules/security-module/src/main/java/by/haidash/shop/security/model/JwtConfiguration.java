@@ -1,10 +1,10 @@
-package by.haidash.shop.jwt.configuration;
+package by.haidash.shop.security.model;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "jwt")
+@ConfigurationProperties(prefix = "security")
 public class JwtConfiguration {
 
     private String loginUri;
@@ -13,7 +13,7 @@ public class JwtConfiguration {
     private String prefix;
     private int expiration;
     private String publicKey;
-    private String secretKey;
+    private String privateKey;
 
     public String getSigninUri() {
         return signinUri;
@@ -63,11 +63,11 @@ public class JwtConfiguration {
         this.publicKey = publicKey;
     }
 
-    public String getSecretKey() {
-        return secretKey;
+    public String getPrivateKey() {
+        return privateKey;
     }
 
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
+    public void setPrivateKey(String privateKey) {
+        this.privateKey = privateKey;
     }
 }

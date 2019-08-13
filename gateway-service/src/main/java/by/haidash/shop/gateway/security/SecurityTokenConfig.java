@@ -1,7 +1,7 @@
 package by.haidash.shop.gateway.security;
 
-import by.haidash.shop.jwt.configuration.JwtConfiguration;
-import by.haidash.shop.jwt.provider.JwtTokenProvider;
+import by.haidash.shop.security.model.JwtConfiguration;
+import by.haidash.shop.security.service.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,12 +16,12 @@ import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtConfiguration jwtConfiguration;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenService jwtTokenService;
 
     @Autowired
-    public SecurityTokenConfig(JwtConfiguration jwtConfiguration, JwtTokenProvider jwtTokenProvider) {
+    public SecurityTokenConfig(JwtConfiguration jwtConfiguration, JwtTokenService jwtTokenService) {
         this.jwtConfiguration = jwtConfiguration;
-        this.jwtTokenProvider = jwtTokenProvider;
+        this.jwtTokenService = jwtTokenService;
     }
 
     @Override
@@ -32,15 +32,15 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(SC_UNAUTHORIZED))
                 .and()
-                .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfiguration, jwtTokenProvider),
+                .addFilterAfter(new JwtTokenAuthenticationFilter(jwtTokenService),
                         UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, jwtConfiguration.getLoginUri()).permitAll()
                 .antMatchers(HttpMethod.POST, jwtConfiguration.getSigninUri()).permitAll()
                 .antMatchers(HttpMethod.GET, "/**/v2/api-docs",
-                        "/**/configuration/ui",
+                        "/**/model/ui",
                         "/**/swagger-resources",
-                        "/**/configuration/jwt",
+                        "/**/model/security",
                         "/**/swagger-ui.html",
                         "/**/webjars/**").permitAll()
                 .anyRequest().authenticated();

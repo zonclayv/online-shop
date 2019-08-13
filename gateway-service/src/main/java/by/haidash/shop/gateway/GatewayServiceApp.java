@@ -1,6 +1,6 @@
 package by.haidash.shop.gateway;
 
-import by.haidash.shop.jwt.JwtModule;
+import by.haidash.shop.security.JwtModule;
 import by.haidash.shop.swagger.SwaggerModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
