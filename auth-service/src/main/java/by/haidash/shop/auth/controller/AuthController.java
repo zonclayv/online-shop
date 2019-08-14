@@ -2,7 +2,7 @@ package by.haidash.shop.auth.controller;
 
 import by.haidash.shop.auth.entity.User;
 import by.haidash.shop.auth.repository.InternalUserRepository;
-import by.haidash.shop.security.model.JwtConfiguration;
+import by.haidash.shop.security.properties.JwtProperties;
 import by.haidash.shop.security.service.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +26,12 @@ public class AuthController {
 
     @Autowired
     public AuthController(InternalUserRepository userRepository,
-                          JwtConfiguration jwtConfiguration,
+                          JwtProperties jwtProperties,
                           JwtTokenService jwtTokenService) {
         this.userRepository = userRepository;
         this.jwtTokenService = jwtTokenService;
 
-        this.signKey = jwtTokenService.getPrivateKey(jwtConfiguration.getPrivateKey());
+        this.signKey = jwtTokenService.getPrivateKey(jwtProperties.getPrivateKey());
     }
 
     @PostMapping("/auth")

@@ -1,6 +1,6 @@
 package by.haidash.shop.security.service;
 
-import by.haidash.shop.security.model.JwtConfiguration;
+import by.haidash.shop.security.properties.JwtProperties;
 import by.haidash.shop.security.model.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -28,14 +28,14 @@ public class JwtTokenService {
     private static final String PATTERN_PRIVATE_KEY = "(-+BEGIN PRIVATE KEY-+\\r?\\n|-+END PRIVATE KEY-+\\r?\\n?)";
     private static final String PATTERN_PUBLIC_KEY = "(-+BEGIN PUBLIC KEY-+\\r?\\n|-+END PUBLIC KEY-+\\r?\\n?)";
 
-    private final JwtConfiguration jwtConfiguration;
+    private final JwtProperties jwtProperties;
     private final Key publicKey;
 
     @Autowired
-    public JwtTokenService(JwtConfiguration jwtConfiguration) {
-        this.jwtConfiguration = jwtConfiguration;
+    public JwtTokenService(JwtProperties jwtProperties) {
+        this.jwtProperties = jwtProperties;
 
-        this.publicKey = getPublicKey(jwtConfiguration.getPublicKey());
+        this.publicKey = getPublicKey(jwtProperties.getPublicKey());
     }
 
     public String createToken(String username, Long userId, List<String> authorities, Key key) {
@@ -46,21 +46,21 @@ public class JwtTokenService {
                 .claim("authorities", authorities)
                 .claim("userId", userId)
                 .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + jwtConfiguration.getExpiration() * 1000))  // in milliseconds
+                .setExpiration(new Date(now + jwtProperties.getExpiration() * 1000))  // in milliseconds
                 .signWith(SignatureAlgorithm.RS512, key)
                 .compact();
 
-        return jwtConfiguration.getPrefix() + token;
+        return jwtProperties.getPrefix() + token;
     }
 
     public UserPrincipal resolveToken(HttpServletRequest request) {
 
-        String header = request.getHeader(jwtConfiguration.getHeader());
-        if (header == null || !header.startsWith(jwtConfiguration.getPrefix())) {
+        String header = request.getHeader(jwtProperties.getHeader());
+        if (header == null || !header.startsWith(jwtProperties.getPrefix())) {
             throw new BadCredentialsException("Wrong authentication token.");
         }
 
-        String token = header.replace(jwtConfiguration.getPrefix(), "");
+        String token = header.replace(jwtProperties.getPrefix(), "");
         Claims claims = Jwts.parser()
                 .setSigningKey(publicKey)
                 .parseClaimsJws(token)
