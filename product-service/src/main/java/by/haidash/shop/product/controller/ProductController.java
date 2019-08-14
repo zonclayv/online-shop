@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//TODO use dto instead of sending entities in all controllers.
+
 @RestController
 @RequestMapping("/products")
 @Api(description = "Set of endpoints for creating, retrieving, updating and deleting of product.")

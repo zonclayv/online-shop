@@ -37,6 +37,7 @@ public class AuthController {
     @PostMapping("/auth")
     public ResponseEntity auth(@RequestParam("username") String username, @RequestParam("password") String password) {
 
+        //TODO replace using of duplicate of UserRepository. Use RabbitMQ for getting user from user-service instead of this
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new BadCredentialsException("Invalid username/password supplied."));
 
