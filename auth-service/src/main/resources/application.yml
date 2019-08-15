@@ -1,12 +1,6 @@
 spring:
   application:
      name: auth-service
-  main:
-    allow-bean-definition-overriding: true
-  datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB:shop_online}
-    username: ${MYSQL_USER:user}
-    password: ${MYSQL_PSW:pass}
 
 server:
   port: 9205

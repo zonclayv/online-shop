@@ -1,6 +1,7 @@
 package by.haidash.shop.user;
 
 import by.haidash.shop.jpa.JpaModule;
+import by.haidash.shop.messaging.user.UserMessagingModule;
 import by.haidash.shop.security.SecurityModule;
 import by.haidash.shop.swagger.SwaggerModule;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +20,8 @@ public class UserServiceApp {
                 UserServiceApp.class,
                 SwaggerModule.class,
                 JpaModule.class,
-                SecurityModule.class
+                SecurityModule.class,
+                UserMessagingModule.class
         };
 
         SpringApplication.run(sources, args);

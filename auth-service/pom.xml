@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>by.haidash.shop</groupId>
-            <artifactId>jpa-module</artifactId>
+            <artifactId>user-messaging-module</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

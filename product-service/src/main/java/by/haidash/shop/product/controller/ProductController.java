@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//TODO use dto instead of sending entities in all controllers.
+//TODO use model instead of sending entities in all controllers.
 
 @RestController
 @RequestMapping("/products")

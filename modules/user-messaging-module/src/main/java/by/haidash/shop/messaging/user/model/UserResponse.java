@@ -1,15 +1,18 @@
-package by.haidash.shop.auth.entity;
+package by.haidash.shop.messaging.user.model;
 
-import by.haidash.shop.jpa.entity.BaseEntity;
+public class UserResponse {
 
-import javax.persistence.Entity;
-
-@Entity
-public class User extends BaseEntity<Long> {
-
+    private Long id;
     private String email;
-
     private String psw;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getEmail() {
         return email;
