@@ -1,13 +1,12 @@
 package by.haidash.shop.user.entity;
 
-import by.haidash.shop.jpa.entity.BaseEntity;
+import by.haidash.shop.jpa.entity.CommonEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 @Entity
-public class User extends BaseEntity<Long>{
+public class User extends CommonEntity {
 
     @Column(unique = true)
     private String email;

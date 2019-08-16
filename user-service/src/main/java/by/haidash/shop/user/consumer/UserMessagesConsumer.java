@@ -1,7 +1,7 @@
 package by.haidash.shop.user.consumer;
 
-import by.haidash.shop.messaging.user.model.UserResponse;
-import by.haidash.shop.messaging.user.model.UserRequest;
+import by.haidash.shop.messaging.user.model.UserResponseMessage;
+import by.haidash.shop.messaging.user.model.UserRequestMessage;
 import by.haidash.shop.user.entity.User;
 import by.haidash.shop.user.exception.UserNotFoundException;
 import by.haidash.shop.user.repository.UserRepository;
@@ -21,17 +21,17 @@ public class UserMessagesConsumer {
     }
 
     @RabbitListener(queues = "${shop.messaging.listener.user.queue}")
-    public UserResponse consume(@Payload UserRequest request) {
+    public UserResponseMessage consume(@Payload UserRequestMessage request) {
 
         String email = request.getEmail();
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException(email));
 
-        UserResponse userResponse = new UserResponse();
-        userResponse.setEmail(user.getEmail());
-        userResponse.setPsw(user.getPsw());
-        userResponse.setId(user.getId());
+        UserResponseMessage userResponseMessage = new UserResponseMessage();
+        userResponseMessage.setEmail(user.getEmail());
+        userResponseMessage.setPsw(user.getPsw());
+        userResponseMessage.setId(user.getId());
 
-        return userResponse;
+        return userResponseMessage;
     }
 }

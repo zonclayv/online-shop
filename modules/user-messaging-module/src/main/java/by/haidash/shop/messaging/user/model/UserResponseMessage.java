@@ -1,6 +1,8 @@
 package by.haidash.shop.messaging.user.model;
 
-public class UserResponse {
+import by.haidash.shop.core.messaging.model.BaseMessage;
+
+public class UserResponseMessage extends BaseMessage {
 
     private Long id;
     private String email;

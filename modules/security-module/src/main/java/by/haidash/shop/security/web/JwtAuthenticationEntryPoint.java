@@ -15,7 +15,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED");
 
-        String json = String.format("{\"message\": \"%s\"}", e.getMessage());
+        String json = String.format("{\"model\": \"%s\"}", e.getMessage());
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

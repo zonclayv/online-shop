@@ -1,22 +1,24 @@
 package by.haidash.shop.jpa.entity;
 
+import by.haidash.shop.core.entity.BaseEntity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class BaseEntity<T> {
+public class CommonEntity implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  T id;
+    private Long id;
 
-    public T getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(T id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

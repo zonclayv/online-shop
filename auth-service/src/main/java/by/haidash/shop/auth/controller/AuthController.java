@@ -1,8 +1,9 @@
 package by.haidash.shop.auth.controller;
 
-import by.haidash.shop.messaging.user.model.UserResponse;
-import by.haidash.shop.messaging.user.model.UserRequest;
-import by.haidash.shop.messaging.user.producer.UserMessagesProducer;
+import by.haidash.shop.core.messaging.service.MessageService;
+import by.haidash.shop.messaging.user.model.UserResponseMessage;
+import by.haidash.shop.messaging.user.model.UserRequestMessage;
+import by.haidash.shop.messaging.user.properties.UserMessagingProperties;
 import by.haidash.shop.security.properties.JwtProperties;
 import by.haidash.shop.security.service.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,13 @@ public class AuthController {
 
     private final Key signKey;
     private final JwtTokenService jwtTokenService;
-    private final UserMessagesProducer userMessagesProducer;
+    private final MessageService<UserRequestMessage> messageService;
 
     @Autowired
-    public AuthController(UserMessagesProducer userMessagesProducer,
+    public AuthController(MessageService<UserRequestMessage> messageService,
                           JwtProperties jwtProperties,
                           JwtTokenService jwtTokenService) {
-        this.userMessagesProducer = userMessagesProducer;
+        this.messageService = messageService;
         this.jwtTokenService = jwtTokenService;
 
         this.signKey = jwtTokenService.getPrivateKey(jwtProperties.getPrivateKey());
@@ -35,8 +36,11 @@ public class AuthController {
     @PostMapping("/auth")
     public ResponseEntity auth(@RequestParam("username") String username, @RequestParam("password") String password) {
 
-        UserRequest userRequest = new UserRequest(username);
-        UserResponse userObject = userMessagesProducer.produceWithResponse(userRequest, UserResponse.class)
+        UserRequestMessage userRequestMessage = new UserRequestMessage(username);
+        UserResponseMessage userObject = messageService.sendWithResponse(userRequestMessage,
+                UserResponseMessage.class,
+                UserMessagingProperties.EXCHANGE_NAME,
+                UserMessagingProperties.ROUTING_NAME)
                     .orElseThrow(() -> new BadCredentialsException("Invalid username/password supplied."));
 
         if (!Objects.equals(userObject.getPsw(), password)) {

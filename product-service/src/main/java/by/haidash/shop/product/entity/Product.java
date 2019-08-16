@@ -1,15 +1,12 @@
 package by.haidash.shop.product.entity;
 
-import by.haidash.shop.jpa.entity.BaseEntity;
+import by.haidash.shop.jpa.entity.CommonNamedEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-public class Product extends BaseEntity<Long> {
-
-    private String name;
+public class Product extends CommonNamedEntity {
 
     // TODO add possibility to load/upload images. s3 bucket can be one of the possible solutions.
     // private List<Images> images;
@@ -20,14 +17,6 @@ public class Product extends BaseEntity<Long> {
     @ManyToMany
     @JoinColumn(name = "product_categories")
     private List<Category> categories;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public List<Keyword> getKeywords() {
         return keywords;
@@ -43,25 +32,5 @@ public class Product extends BaseEntity<Long> {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Product product = (Product) o;
-
-        if (!name.equals(product.name)) return false;
-        if (keywords != null ? !keywords.equals(product.keywords) : product.keywords != null) return false;
-        return categories != null ? categories.equals(product.categories) : product.categories == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + (keywords != null ? keywords.hashCode() : 0);
-        result = 31 * result + (categories != null ? categories.hashCode() : 0);
-        return result;
     }
 }

@@ -1,11 +1,11 @@
 package by.haidash.shop.cart.entity;
 
-import by.haidash.shop.jpa.entity.BaseEntity;
+import by.haidash.shop.jpa.entity.CommonEntity;
 
 import javax.persistence.*;
 
 @Entity
-public class OrderProduct extends BaseEntity<Long> {
+public class OrderProduct extends CommonEntity {
 
     @Column(nullable = false)
     private Long product;

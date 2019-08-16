@@ -1,13 +1,15 @@
 package by.haidash.shop.messaging.user.model;
 
-public class UserRequest {
+import by.haidash.shop.core.messaging.model.BaseMessage;
+
+public class UserRequestMessage extends BaseMessage {
 
     private String email;
 
-    public UserRequest() {
+    public UserRequestMessage() {
     }
 
-    public UserRequest(String email) {
+    public UserRequestMessage(String email) {
         this.email = email;
     }
 

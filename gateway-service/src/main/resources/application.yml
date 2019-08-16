@@ -15,22 +15,23 @@ eureka:
 zuul:
   ignoredServices: '*'
   sensitiveHeaders: Cookie,Set-Cookie
+  prefix: /api
   routes:
     user-service:
-      path: /users/**
+      path: /user/**
       service-id: USER-SERVICE
     auth-service:
       path: /auth/**
       service-id: AUTH-SERVICE
     cart-service:
-      path: /carts/**
+      path: /cart/**
       service-id: CART-SERVICE
     product-service:
-      path: /products/**
+      path: /product/**
       service-id: PRODUCT-SERVICE
     keyword-service:
-      path: /keywords/**
+      path: /keyword/**
       service-id: PRODUCT-SERVICE
     category-service:
-      path: /categories/**
+      path: /category/**
       service-id: PRODUCT-SERVICE
