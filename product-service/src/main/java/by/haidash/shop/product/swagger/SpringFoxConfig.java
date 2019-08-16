@@ -1,8 +1,7 @@
-package by.haidash.shop.swagger.config;
+package by.haidash.shop.product.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -14,7 +13,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
 
-@Primary
 @Configuration
 @EnableSwagger2
 public class SpringFoxConfig {
@@ -23,7 +21,7 @@ public class SpringFoxConfig {
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
+                .apis(RequestHandlerSelectors.basePackage("by.haidash.shop.product.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
@@ -31,9 +29,9 @@ public class SpringFoxConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "Online shop application",
-                "It's a simple example of using Spring Cloud.",
-                "1.0.0",
+                "Online shop | Product service",
+                "Implementation of product service.",
+                "0.0.1",
                 "https://github.com/zonclayv/online-shop",
                 new Contact("Aleh Haidash", "https://github.com/zonclayv/", "aleh.haidash@gmail.com"),
                 "GNU General Public License v3.0",

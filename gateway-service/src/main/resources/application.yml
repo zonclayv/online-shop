@@ -19,24 +19,18 @@ zuul:
     user-service:
       path: /users/**
       service-id: USER-SERVICE
-      strip-prefix: false
     auth-service:
       path: /auth/**
       service-id: AUTH-SERVICE
-      strip-prefix: false
     cart-service:
       path: /carts/**
       service-id: CART-SERVICE
-      strip-prefix: false
     product-service:
       path: /products/**
       service-id: PRODUCT-SERVICE
-      strip-prefix: false
     keyword-service:
       path: /keywords/**
       service-id: PRODUCT-SERVICE
-      strip-prefix: false
     category-service:
       path: /categories/**
       service-id: PRODUCT-SERVICE
-      strip-prefix: false

@@ -39,12 +39,12 @@ public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, jwtProperties.getLoginUri()).permitAll()
                 .antMatchers(HttpMethod.POST, jwtProperties.getRegistrationUri()).permitAll()
-                .antMatchers(HttpMethod.GET, "/v2/api-docs",
-                        "/model/ui",
-                        "/swagger-resources",
-                        "/model/security",
-                        "/swagger-ui.html",
-                        "/webjars/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/**/v2/api-docs",
+                        "/**/model/ui",
+                        "/**/swagger-resources",
+                        "/**/model/security",
+                        "/**/swagger-ui.html",
+                        "/**/webjars/**").permitAll()
                 .anyRequest().authenticated();
     }
 }
