@@ -11,10 +11,10 @@
         <relativePath/>
     </parent>
 
-    <artifactId>registration-server</artifactId>
+    <artifactId>discovery-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>registration-server</name>
+    <name>discovery-service</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
