@@ -1,5 +1,8 @@
 package by.haidash.shop.product.controller;
 
+import by.haidash.shop.core.CoreModule;
+import by.haidash.shop.jpa.JpaModule;
+import by.haidash.shop.product.ProductServiceApp;
 import by.haidash.shop.product.entity.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -8,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,7 +25,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = {
+        ProductServiceApp.class,
+        CoreModule.class,
+        JpaModule.class})
 @AutoConfigureMockMvc
 public class ProductControllerTest {
 
@@ -31,6 +39,7 @@ public class ProductControllerTest {
     private ObjectMapper mapper;
 
     @Test
+    @WithMockUser
     public void getAllProducts() throws Exception {
         this.mockMvc.perform(get("/products/"))
                 .andDo(print())
@@ -39,6 +48,7 @@ public class ProductControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void getProduct() throws Exception {
         this.mockMvc.perform(get("/products/1"))
                 .andDo(print())
@@ -47,6 +57,7 @@ public class ProductControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void getProductWithWrongId() throws Exception {
         this.mockMvc.perform(get("/products/1515"))
                 .andDo(print())
@@ -54,6 +65,7 @@ public class ProductControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void addProduct() throws Exception {
 
         Product product = new Product();
@@ -63,6 +75,7 @@ public class ProductControllerTest {
 
         this.mockMvc.perform(post("/products/")
                             .content(json)
+                            .with(SecurityMockMvcRequestPostProcessors.csrf())
                             .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -71,9 +84,11 @@ public class ProductControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void addKeyword() throws Exception {
 
-        this.mockMvc.perform(put("/products/1/keywords/3"))
+        this.mockMvc.perform(put("/products/1/keywords/3")
+                            .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is(1)))
@@ -82,9 +97,11 @@ public class ProductControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void addExistKeyword() throws Exception {
 
-        this.mockMvc.perform(put("/products/1/keywords/2"))
+        this.mockMvc.perform(put("/products/1/keywords/2")
+                            .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is(1)))
@@ -93,9 +110,11 @@ public class ProductControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void addKeywordToEmptyList() throws Exception {
 
-        this.mockMvc.perform(put("/products/2/keywords/2"))
+        this.mockMvc.perform(put("/products/2/keywords/2")
+                            .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is(2)))
@@ -104,17 +123,21 @@ public class ProductControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void addUnknownKeyword() throws Exception {
 
-        this.mockMvc.perform(put("/products/2/keywords/512"))
+        this.mockMvc.perform(put("/products/2/keywords/512")
+                            .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andDo(print())
                 .andExpect(status().is(404));
     }
 
     @Test
+    @WithMockUser
     public void addCategory() throws Exception {
 
-        this.mockMvc.perform(put("/products/1/categories/1"))
+        this.mockMvc.perform(put("/products/1/categories/1")
+                            .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is(1)))
@@ -123,9 +146,11 @@ public class ProductControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void addExistCategory() throws Exception {
 
-        this.mockMvc.perform(put("/products/1/categories/1"))
+        this.mockMvc.perform(put("/products/1/categories/1")
+                            .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is(1)))
@@ -134,10 +159,11 @@ public class ProductControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void addCategoryToEmptyList() throws Exception {
 
-        this.mockMvc.perform(put("/products/2/categories/1"))
-                .andDo(print())
+        this.mockMvc.perform(put("/products/2/categories/1")
+                            .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is(2)))
                 .andExpect(jsonPath("categories", hasSize(1)))
@@ -145,14 +171,17 @@ public class ProductControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void addUnknownCategory() throws Exception {
 
-        this.mockMvc.perform(put("/products/2/categories/2313"))
+        this.mockMvc.perform(put("/products/2/categories/2313")
+                            .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andDo(print())
                 .andExpect(status().is(404));
     }
 
     @Test
+    @WithMockUser
     public void findByKeyword() throws Exception {
 
         this.mockMvc.perform(get("/products/keywords/2"))
@@ -164,6 +193,7 @@ public class ProductControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void findByCategory() throws Exception {
 
         this.mockMvc.perform(get("/products/categories/1"))

@@ -10,6 +10,10 @@
             <column name="id" valueNumeric="1"/>
             <column name="name" value="Фитнес браслет"/>
         </insert>
+        <insert tableName="product">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Блендер"/>
+        </insert>
         <insert tableName="product_keywords">
             <column name="keywords_id" value="2"/>
             <column name="product_id" value="1"/>

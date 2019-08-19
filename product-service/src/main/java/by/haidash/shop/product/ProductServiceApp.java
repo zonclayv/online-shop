@@ -1,5 +1,6 @@
 package by.haidash.shop.product;
 
+import by.haidash.shop.core.CoreModule;
 import by.haidash.shop.jpa.JpaModule;
 import by.haidash.shop.security.SecurityModule;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +14,7 @@ public class ProductServiceApp {
         Class[] sources = {
                 ProductServiceApp.class,
                 JpaModule.class,
+                CoreModule.class,
                 SecurityModule.class
         };
 
