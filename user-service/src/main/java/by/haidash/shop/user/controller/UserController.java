@@ -5,9 +5,6 @@ import by.haidash.shop.user.entity.User;
 import by.haidash.shop.user.exception.UserNotFoundException;
 import by.haidash.shop.user.exception.EmailExistException;
 import by.haidash.shop.user.repository.UserRepository;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-@Api(description = "Set of endpoints for creating, retrieving, updating and deleting of user.")
 public class UserController {
 
     @Autowired
@@ -26,23 +22,18 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping
-    @ApiOperation("Returns list of all users.")
     public List<User> all() {
         return userRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    @ApiOperation("Returns a specific product by their identifier. 404 if does not exist.")
-    public User getUser(@ApiParam("Id of the user to be obtained. Cannot be empty.")
-                            @PathVariable Long id){
+    public User getUser(@PathVariable Long id){
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @PostMapping
-    @ApiOperation("Registration of new user.")
-    public User register(@ApiParam("User information for a new user to be created.")
-                             @RequestBody NewUser newUser){
+    public User addUser(@RequestBody NewUser newUser){
 
         // TODO need implement checking
         if (false) {
