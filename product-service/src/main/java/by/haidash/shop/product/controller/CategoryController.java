@@ -1,7 +1,7 @@
 package by.haidash.shop.product.controller;
 
+import by.haidash.shop.core.exception.ResourceNotFoundException;
 import by.haidash.shop.product.entity.Category;
-import by.haidash.shop.product.exception.CategoryNotFoundException;
 import by.haidash.shop.product.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +28,7 @@ public class CategoryController {
     public Category getCategory(@PathVariable Long id) {
 
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new CategoryNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find category with id "+ id));
     }
 
     @PostMapping

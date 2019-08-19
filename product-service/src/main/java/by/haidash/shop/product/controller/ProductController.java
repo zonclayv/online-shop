@@ -1,11 +1,9 @@
 package by.haidash.shop.product.controller;
 
+import by.haidash.shop.core.exception.ResourceNotFoundException;
 import by.haidash.shop.product.entity.Category;
 import by.haidash.shop.product.entity.Keyword;
 import by.haidash.shop.product.entity.Product;
-import by.haidash.shop.product.exception.CategoryNotFoundException;
-import by.haidash.shop.product.exception.KeywordNotFoundException;
-import by.haidash.shop.product.exception.ProductNotFoundException;
 import by.haidash.shop.product.repository.CategoryRepository;
 import by.haidash.shop.product.repository.KeywordRepository;
 import by.haidash.shop.product.repository.ProductRepository;
@@ -42,7 +40,7 @@ public class ProductController {
     public Product getProduct(@PathVariable  Long id) {
 
         return productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find product with id "+ id));
     }
 
     @PostMapping
@@ -57,7 +55,7 @@ public class ProductController {
 
         Product product = getProduct(productId);
         Keyword keyword = keywordRepository.findById(keywordId)
-                .orElseThrow(() -> new KeywordNotFoundException(keywordId));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find keyword with id "+ keywordId));
 
         List<Keyword> keywords = product.getKeywords();
         if(keywords.isEmpty() || !keywords.contains(keyword)){
@@ -74,7 +72,7 @@ public class ProductController {
 
         Product product = getProduct(productId);
         Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new CategoryNotFoundException(categoryId));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find category with id "+ categoryId));
 
         List<Category> categories = product.getCategories();
         if(categories.isEmpty() || !categories.contains(category)){

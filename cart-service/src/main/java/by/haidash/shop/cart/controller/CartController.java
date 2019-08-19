@@ -1,10 +1,10 @@
 package by.haidash.shop.cart.controller;
 
-import by.haidash.shop.cart.exception.PermissionDeniedException;
+import by.haidash.shop.core.exception.ResourceNotFoundException;
+import by.haidash.shop.security.exception.PermissionDeniedException;
 import by.haidash.shop.security.model.UserPrincipal;
 import by.haidash.shop.cart.entity.Cart;
 import by.haidash.shop.cart.entity.OrderProduct;
-import by.haidash.shop.cart.exception.CartNotFoundException;
 import by.haidash.shop.cart.repository.CartRepository;
 import by.haidash.shop.security.service.SecurityContextService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +89,7 @@ public class CartController {
     private Cart getCart(Long cartId) {
 
         Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new CartNotFoundException("Cart with id '" + cartId + "' not fount"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cart with id '" + cartId + "' not fount"));
 
         UserPrincipal userPrincipal = securityContextService.getUserPrincipal();
         if (!Objects.equals(cart.getUser(), userPrincipal.getId())) {

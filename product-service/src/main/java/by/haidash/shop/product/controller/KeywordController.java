@@ -1,8 +1,8 @@
 package by.haidash.shop.product.controller;
 
+import by.haidash.shop.core.exception.ResourceAlreadyExistException;
+import by.haidash.shop.core.exception.ResourceNotFoundException;
 import by.haidash.shop.product.entity.Keyword;
-import by.haidash.shop.product.exception.KeywordAlreadyExistException;
-import by.haidash.shop.product.exception.KeywordNotFoundException;
 import by.haidash.shop.product.repository.KeywordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +29,7 @@ public class KeywordController {
     public Keyword getKeyword(@PathVariable Long id) {
 
         return keywordRepository.findById(id)
-                .orElseThrow(() -> new KeywordNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find keyword with id "+ id));
     }
 
     @PostMapping
@@ -48,11 +48,12 @@ public class KeywordController {
     public Keyword renameKeyword(@PathVariable Long id,
                                  @RequestBody String name){
 
-        keywordRepository.findByName(name)
-                .orElseThrow(() -> new KeywordAlreadyExistException("Keyword with given name '"+ name +"' already exist"));
+        keywordRepository.findByName(name).ifPresent(keyword -> {
+            throw new ResourceAlreadyExistException("Keyword with given name '"+ name +"' already exist");
+        });
 
         Keyword keyword = keywordRepository.findById(id)
-                .orElseThrow(() -> new KeywordNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find keyword with id "+ id));
         keyword.setName(name);
 
         return keywordRepository.save(keyword);

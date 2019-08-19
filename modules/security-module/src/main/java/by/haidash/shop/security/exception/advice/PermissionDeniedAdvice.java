@@ -1,6 +1,6 @@
-package by.haidash.shop.user.advice;
+package by.haidash.shop.security.exception.advice;
 
-import by.haidash.shop.user.exception.UserNotFoundException;
+import by.haidash.shop.security.exception.PermissionDeniedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-class UserNotFoundAdvice {
+class PermissionDeniedAdvice {
 
     @ResponseBody
-    @ExceptionHandler(UserNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String employeeNotFoundHandler(UserNotFoundException ex) {
+    @ExceptionHandler(PermissionDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String employeeNotFoundHandler(PermissionDeniedException ex) {
         return ex.getMessage();
     }
 }

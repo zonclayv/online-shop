@@ -24,7 +24,7 @@ public class AuthController {
     private final MessageService<UserRequestMessage> messageService;
 
     @Autowired
-    public AuthController(MessageService<UserRequestMessage> messageService,
+    public AuthController(MessageService messageService,
                           JwtProperties jwtProperties,
                           JwtTokenService jwtTokenService) {
         this.messageService = messageService;

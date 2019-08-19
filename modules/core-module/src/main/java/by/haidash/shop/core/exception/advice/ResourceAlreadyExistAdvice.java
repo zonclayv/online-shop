@@ -1,6 +1,6 @@
-package by.haidash.shop.cart.advice;
+package by.haidash.shop.core.exception.advice;
 
-import by.haidash.shop.cart.exception.PermissionDeniedException;
+import by.haidash.shop.core.exception.ResourceAlreadyExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-class PermissionDeniedAdvice {
+class ResourceAlreadyExistAdvice {
 
     @ResponseBody
-    @ExceptionHandler(PermissionDeniedException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public String employeeNotFoundHandler(PermissionDeniedException ex) {
+    @ExceptionHandler(ResourceAlreadyExistException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String employeeNotFoundHandler(ResourceAlreadyExistException ex) {
         return ex.getMessage();
     }
 }

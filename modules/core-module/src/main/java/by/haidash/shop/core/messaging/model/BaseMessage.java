@@ -1,4 +1,6 @@
 package by.haidash.shop.core.messaging.model;
 
-public class BaseMessage {
+import java.io.Serializable;
+
+public class BaseMessage implements Serializable{
 }
