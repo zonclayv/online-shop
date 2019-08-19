@@ -31,4 +31,23 @@ public class Cart extends CommonEntity {
     public void setProducts(List<OrderProduct> products) {
         this.products = products;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cart)) return false;
+        if (!super.equals(o)) return false;
+
+        Cart cart = (Cart) o;
+
+        if (!user.equals(cart.user)) return false;
+        return products != null ? products.equals(cart.products) : cart.products == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + user.hashCode();
+        return result;
+    }
 }

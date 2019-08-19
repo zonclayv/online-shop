@@ -17,4 +17,15 @@ public class Category extends CommonNamedEntity {
     public void setParent(Category parent) {
         this.parent = parent;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Category)) return false;
+        if (!super.equals(o)) return false;
+
+        Category category = (Category) o;
+
+        return parent != null ? parent.equals(category.parent) : category.parent == null;
+    }
 }

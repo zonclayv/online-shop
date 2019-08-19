@@ -1,7 +1,6 @@
 package by.haidash.shop.user.entity;
 
 import by.haidash.shop.jpa.entity.CommonEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -27,7 +26,6 @@ public class User extends CommonEntity {
         this.email = email;
     }
 
-    @JsonIgnore
     public String getPsw() {
         return psw;
     }

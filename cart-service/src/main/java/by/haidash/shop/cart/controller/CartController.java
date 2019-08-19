@@ -1,6 +1,8 @@
 package by.haidash.shop.cart.controller;
 
+import by.haidash.shop.cart.controller.details.CartDetails;
 import by.haidash.shop.core.exception.ResourceNotFoundException;
+import by.haidash.shop.core.service.EntityMapperService;
 import by.haidash.shop.security.exception.PermissionDeniedException;
 import by.haidash.shop.security.model.UserPrincipal;
 import by.haidash.shop.cart.entity.Cart;
@@ -19,27 +21,37 @@ public class CartController {
 
     private final SecurityContextService securityContextService;
     private final CartRepository cartRepository;
+    private final EntityMapperService entityMapperService;
 
     @Autowired
-    public CartController(SecurityContextService securityContextService, CartRepository cartRepository) {
+    public CartController(SecurityContextService securityContextService,
+                          CartRepository cartRepository,
+                          EntityMapperService entityMapperService) {
+
         this.securityContextService = securityContextService;
         this.cartRepository = cartRepository;
+        this.entityMapperService = entityMapperService;
     }
 
     @GetMapping("/{cartId}")
-    public Cart getCartById(@PathVariable Long cartId) {
-        return getCart(cartId);
+    public CartDetails getCartById(@PathVariable Long cartId) {
+
+        Cart cart = getCart(cartId);
+        return entityMapperService.convertToDetails(cart, CartDetails.class);
     }
 
     @PostMapping
-    public Cart createCart(@RequestBody Cart cart) {
-        return cartRepository.save(cart);
+    public CartDetails createCart(@RequestBody CartDetails cartDetails) {
+
+        Cart cart = entityMapperService.convertToEntity(cartDetails, Cart.class);
+        Cart createdCart = cartRepository.save(cart);
+        return entityMapperService.convertToDetails(createdCart, CartDetails.class);
     }
 
     @PutMapping("/{cartId}/products/{productId}/{quantity}")
-    public Cart addProductWithQuantity(@PathVariable  Long cartId,
-                                       @PathVariable Long productId,
-                                       @PathVariable Integer quantity) {
+    public CartDetails addProductWithQuantity(@PathVariable Long cartId,
+                                              @PathVariable Long productId,
+                                              @PathVariable Integer quantity) {
         Cart cart = getCart(cartId);
         List<OrderProduct> products = cart.getProducts();
         OrderProduct product = products.stream()
@@ -57,13 +69,14 @@ public class CartController {
 
         product.setQuantity(product.getQuantity() + quantity);
 
-        return cartRepository.save(cart);
+        Cart updatedCart = cartRepository.save(cart);
+        return entityMapperService.convertToDetails(updatedCart, CartDetails.class);
     }
 
     @PatchMapping("/{cartId}/products/{productId}/{quantity}")
-    public Cart updateProductQuantity(@PathVariable  Long cartId,
-                                      @PathVariable  Long productId,
-                                      @PathVariable  Integer quantity) {
+    public CartDetails updateProductQuantity(@PathVariable  Long cartId,
+                                             @PathVariable  Long productId,
+                                             @PathVariable  Integer quantity) {
 
         Cart cart = getCart(cartId);
         cart.getProducts()
@@ -72,18 +85,20 @@ public class CartController {
                 .findFirst()
                 .ifPresent(orderProduct-> orderProduct.setQuantity(quantity));
 
-        return cartRepository.save(cart);
+        Cart updatedCart = cartRepository.save(cart);
+        return entityMapperService.convertToDetails(updatedCart, CartDetails.class);
     }
 
     @DeleteMapping("/{cartId}/products/{productId}")
-    public Cart removeProduct(@PathVariable  Long cartId,
-                              @PathVariable  Long productId) {
+    public CartDetails removeProduct(@PathVariable  Long cartId,
+                                     @PathVariable  Long productId) {
 
         Cart cart = getCart(cartId);
         cart.getProducts()
                 .removeIf(orderProduct-> Objects.equals(orderProduct.getId(), productId));
 
-        return cartRepository.save(cart);
+        Cart updatedCart = cartRepository.save(cart);
+        return entityMapperService.convertToDetails(updatedCart, CartDetails.class);
     }
 
     private Cart getCart(Long cartId) {

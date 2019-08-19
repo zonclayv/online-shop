@@ -29,7 +29,7 @@ public class SpringFoxConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "Online shop | Product service",
+                "Online shop | ProductDetails service",
                 "Implementation of product service.",
                 "0.0.1",
                 "https://github.com/zonclayv/online-shop",

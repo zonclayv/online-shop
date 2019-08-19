@@ -33,4 +33,16 @@ public class Product extends CommonNamedEntity {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        if (!super.equals(o)) return false;
+
+        Product product = (Product) o;
+
+        if (keywords != null ? !keywords.equals(product.keywords) : product.keywords != null) return false;
+        return categories != null ? categories.equals(product.categories) : product.categories == null;
+    }
 }

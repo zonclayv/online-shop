@@ -1,9 +1,9 @@
 package by.haidash.shop.user.consumer;
 
+import by.haidash.shop.core.exception.ResourceNotFoundException;
 import by.haidash.shop.messaging.user.model.UserResponseMessage;
 import by.haidash.shop.messaging.user.model.UserRequestMessage;
 import by.haidash.shop.user.entity.User;
-import by.haidash.shop.user.exception.UserNotFoundException;
 import by.haidash.shop.user.repository.UserRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class UserMessagesConsumer {
 
         String email = request.getEmail();
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(email));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find user with email "+ email));
 
         UserResponseMessage userResponseMessage = new UserResponseMessage();
         userResponseMessage.setEmail(user.getEmail());
