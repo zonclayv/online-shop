@@ -18,20 +18,20 @@ zuul:
   prefix: /api
   routes:
     user-service:
-      path: /user/**
+      path: /user-service/**
       service-id: USER-SERVICE
     auth-service:
-      path: /auth/**
+      path: /auth-service/**
       service-id: AUTH-SERVICE
     cart-service:
-      path: /cart/**
+      path: /cart-service/**
       service-id: CART-SERVICE
     product-service:
-      path: /product/**
+      path: /product-service/**
       service-id: PRODUCT-SERVICE
     keyword-service:
-      path: /keyword/**
+      path: /keyword-service/**
       service-id: PRODUCT-SERVICE
     category-service:
-      path: /category/**
+      path: /category-service/**
       service-id: PRODUCT-SERVICE
