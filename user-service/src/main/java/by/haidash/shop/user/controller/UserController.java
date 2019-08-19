@@ -6,7 +6,6 @@ import by.haidash.shop.core.service.EntityMapperService;
 import by.haidash.shop.user.controller.details.UserDetails;
 import by.haidash.shop.user.entity.User;
 import by.haidash.shop.user.repository.UserRepository;
-import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
