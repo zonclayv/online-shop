@@ -1,4 +1,4 @@
-package by.haidash.shop.product.swagger;
+package by.haidash.shop.product.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import java.util.Collections;
 
 @Configuration
 @EnableSwagger2
-public class SpringFoxConfig {
+public class SwaggerConfig {
 
     @Bean
     public Docket createRestApi() {

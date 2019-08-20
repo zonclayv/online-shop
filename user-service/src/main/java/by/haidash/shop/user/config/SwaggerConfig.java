@@ -1,4 +1,4 @@
-package by.haidash.shop.gateway.config;
+package by.haidash.shop.user.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,16 +8,14 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.paths.RelativePathProvider;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import javax.servlet.ServletContext;
 import java.util.Collections;
 
 @Configuration
 @EnableSwagger2
-public class SpringFoxConfig {
+public class SwaggerConfig {
 
     @Bean
     public Docket createRestApi() {
@@ -31,8 +29,8 @@ public class SpringFoxConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "Online shop",
-                "This is a simple example of using Spring Cloud to build microservices.",
+                "Online shop | User service",
+                "Implementation of user service.",
                 "0.0.1",
                 "https://github.com/zonclayv/online-shop",
                 new Contact("Aleh Haidash", "https://github.com/zonclayv/", "aleh.haidash@gmail.com"),
