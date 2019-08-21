@@ -1,7 +1,6 @@
 package by.haidash.shop.user;
 
 import by.haidash.shop.jpa.JpaModule;
-import by.haidash.shop.messaging.user.UserMessagingModule;
 import by.haidash.shop.security.SecurityModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,8 +14,7 @@ public class UserServiceApp {
         Class[] sources = {
                 UserServiceApp.class,
                 JpaModule.class,
-                SecurityModule.class,
-                UserMessagingModule.class
+                SecurityModule.class
         };
 
         SpringApplication.run(sources, args);

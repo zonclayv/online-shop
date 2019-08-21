@@ -41,7 +41,7 @@ public class UserController {
     @GetMapping("/{id}")
     public UserDetails getUser(@PathVariable Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Could not find user with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find producer with id " + id));
 
         return entityMapperService.convertToDetails(user, UserDetails.class);
     }
@@ -51,7 +51,7 @@ public class UserController {
 
         String email = userDetails.getEmail();
         userRepository.findByEmail(email).ifPresent(user -> {
-            throw new ResourceAlreadyExistException("There is an user with provided email address:" + email);
+            throw new ResourceAlreadyExistException("There is an producer with provided email address:" + email);
         });
 
         User user = entityMapperService.convertToEntity(userDetails, User.class);

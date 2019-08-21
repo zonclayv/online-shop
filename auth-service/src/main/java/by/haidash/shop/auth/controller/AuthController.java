@@ -1,13 +1,13 @@
 package by.haidash.shop.auth.controller;
 
 import by.haidash.shop.auth.controller.details.TokenDetails;
-import by.haidash.shop.core.messaging.service.MessageService;
-import by.haidash.shop.messaging.user.model.UserResponseMessage;
-import by.haidash.shop.messaging.user.model.UserRequestMessage;
-import by.haidash.shop.messaging.user.properties.UserMessagingProperties;
+import by.haidash.shop.auth.controller.messaging.UserCheckMessage;
+import by.haidash.shop.messaging.properties.MessagingPropertiesEntry;
+import by.haidash.shop.messaging.service.MessagingService;
 import by.haidash.shop.security.properties.JwtProperties;
 import by.haidash.shop.security.service.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,17 +20,20 @@ import java.util.*;
 @RestController
 public class AuthController {
 
+    @Value("${shop.messaging.keys.user-check}")
+    private String userCheckMessagingKey;
+
     private final Key signKey;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenService jwtTokenService;
-    private final MessageService<UserRequestMessage> messageService;
+    private final MessagingService messagingService;
 
     @Autowired
-    public AuthController(MessageService<UserRequestMessage> messageService,
+    public AuthController(MessagingService messagingService,
                           PasswordEncoder passwordEncoder,
                           JwtProperties jwtProperties,
                           JwtTokenService jwtTokenService) {
-        this.messageService = messageService;
+        this.messagingService = messagingService;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenService = jwtTokenService;
 
@@ -40,11 +43,12 @@ public class AuthController {
     @PostMapping("/auth")
     public TokenDetails auth(@RequestParam("username") String username, @RequestParam("password") String password) {
 
-        UserRequestMessage userRequestMessage = new UserRequestMessage(username);
-        UserResponseMessage userObject = messageService.sendWithResponse(userRequestMessage,
-                UserResponseMessage.class,
-                UserMessagingProperties.EXCHANGE_NAME,
-                UserMessagingProperties.ROUTING_NAME)
+        MessagingPropertiesEntry userMessagingProperties = messagingService.getProperties(userCheckMessagingKey);
+
+        UserCheckMessage userObject = messagingService.sendWithResponse(username,
+                UserCheckMessage.class,
+                userMessagingProperties.getExchange(),
+                userMessagingProperties.getRoute())
                     .orElseThrow(() -> new BadCredentialsException("Invalid username/password supplied."));
 
         if (!passwordEncoder.matches(password, userObject.getPsw())) {

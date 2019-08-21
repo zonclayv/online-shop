@@ -1,8 +1,6 @@
-package by.haidash.shop.messaging.user.model;
+package by.haidash.shop.auth.controller.messaging;
 
-import by.haidash.shop.core.messaging.model.BaseMessage;
-
-public class UserResponseMessage extends BaseMessage {
+public class UserCheckMessage {
 
     private Long id;
     private String email;

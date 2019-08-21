@@ -51,7 +51,7 @@
         </dependency>
         <dependency>
             <groupId>by.haidash.shop</groupId>
-            <artifactId>user-messaging-module</artifactId>
+            <artifactId>rabbit-messaging-starter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
