@@ -1,7 +1,5 @@
 package by.haidash.shop.product.controller;
 
-import by.haidash.shop.core.CoreModule;
-import by.haidash.shop.jpa.JpaModule;
 import by.haidash.shop.product.ProductServiceApp;
 import by.haidash.shop.product.entity.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,10 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {
-        ProductServiceApp.class,
-        CoreModule.class,
-        JpaModule.class})
+@SpringBootTest
 @AutoConfigureMockMvc
 public class ProductControllerTest {
 

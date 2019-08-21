@@ -3,10 +3,6 @@ spring:
      name: cart-service
   main:
     allow-bean-definition-overriding: true
-  datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB:shop_online}
-    username: ${MYSQL_USER:user}
-    password: ${MYSQL_PSW:pass}
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
 

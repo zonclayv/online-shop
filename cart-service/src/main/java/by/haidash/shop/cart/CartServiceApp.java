@@ -1,6 +1,5 @@
 package by.haidash.shop.cart;
 
-import by.haidash.shop.jpa.JpaModule;
 import by.haidash.shop.security.SecurityModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +12,6 @@ public class CartServiceApp {
         Class[] sources = {
                 CartServiceApp.class,
                 SecurityModule.class,
-                JpaModule.class
         };
 
         SpringApplication.run(sources, args);
