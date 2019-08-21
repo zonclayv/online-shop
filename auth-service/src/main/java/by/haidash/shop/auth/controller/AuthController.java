@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,19 +46,22 @@ public class AuthController {
 
         MessagingPropertiesEntry userMessagingProperties = messagingService.getProperties(userCheckMessagingKey);
 
-        UserCheckMessage userObject = messagingService.sendWithResponse(username,
+        UserCheckMessage request = new UserCheckMessage();
+        request.setEmail(username);
+
+        UserCheckMessage response = messagingService.sendWithResponse(request,
                 UserCheckMessage.class,
                 userMessagingProperties.getExchange(),
                 userMessagingProperties.getRoute())
                     .orElseThrow(() -> new BadCredentialsException("Invalid username/password supplied."));
 
-        if (!passwordEncoder.matches(password, userObject.getPsw())) {
+        if (StringUtils.isEmpty(response.getId()) || !passwordEncoder.matches(password, response.getPsw())) {
             throw new BadCredentialsException("Invalid username/password supplied.");
         }
 
         String token = jwtTokenService.createToken(
-                userObject.getEmail(),
-                userObject.getId(),
+                response.getEmail(),
+                response.getId(),
                 Collections.singletonList("USER"),
                 signKey);
 

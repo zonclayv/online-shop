@@ -20,15 +20,16 @@ public class UserMessagesConsumer {
     }
 
     @RabbitListener(queues = "${shop.messaging.listener.user-check}")
-    public UserCheckMessage consume(@Payload String username) {
-
-        User user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new ResourceNotFoundException("Could not find producer with email "+ username));
+    public UserCheckMessage consume(@Payload UserCheckMessage request) {
 
         UserCheckMessage message = new UserCheckMessage();
-        message.setEmail(user.getEmail());
-        message.setPsw(user.getPsw());
-        message.setId(user.getId());
+        userRepository.findByEmail(request.getEmail())
+                .ifPresent(user -> {
+                    message.setEmail(user.getEmail());
+                    message.setPsw(user.getPsw());
+                    message.setId(user.getId());
+                });
+
 
         return message;
     }

@@ -10,7 +10,7 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
 
-shop.messaging.listener.user.queue: auth-user-messaging
+shop.messaging.listener.user-check: user-check-queue
 
 server:
   port: 9203

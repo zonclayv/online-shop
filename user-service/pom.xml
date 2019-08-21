@@ -39,6 +39,12 @@
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>by.haidash.shop</groupId>
+            <artifactId>rabbit-messaging-starter</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>by.haidash.shop</groupId>
             <artifactId>jpa-module</artifactId>
@@ -47,11 +53,6 @@
         <dependency>
             <groupId>by.haidash.shop</groupId>
             <artifactId>security-module</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>by.haidash.shop</groupId>
-            <artifactId>rabbit-messaging-starter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

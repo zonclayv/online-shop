@@ -1,6 +1,8 @@
 package by.haidash.shop.user.messaging.data;
 
-public class UserCheckMessage {
+import java.io.Serializable;
+
+public class UserCheckMessage implements Serializable {
 
     private Long id;
     private String email;

@@ -30,7 +30,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfo(
                 "Online shop | User service",
-                "Implementation of producer service.",
+                "Implementation of user service.",
                 "0.0.1",
                 "https://github.com/zonclayv/online-shop",
                 new Contact("Aleh Haidash", "https://github.com/zonclayv/", "aleh.haidash@gmail.com"),
