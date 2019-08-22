@@ -1,3 +1,5 @@
-# Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 by.haidash.shop.jpa.JpaConfiguration
+
+org.springframework.context.ApplicationContextInitializer=\
+by.haidash.shop.jpa.initializer.JpaPropertiesInitializer
