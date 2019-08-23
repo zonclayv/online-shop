@@ -2,12 +2,16 @@ package by.haidash.shop.product.controller;
 
 import by.haidash.shop.product.ProductServiceApp;
 import by.haidash.shop.product.entity.Product;
+import by.haidash.shop.security.model.UserPrincipal;
+import by.haidash.shop.security.service.JwtTokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
@@ -15,6 +19,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -33,8 +39,22 @@ public class ProductControllerTest {
     @Autowired
     private ObjectMapper mapper;
 
+    @MockBean
+    private JwtTokenService jwtTokenService;
+
+    @Before
+    public void setUp(){
+
+        UserPrincipal userPrincipal = UserPrincipal.builder()
+                .username("mock-user")
+                .authorities("USER")
+                .id(1L)
+                .build();
+
+        when(jwtTokenService.resolveToken(any())).thenReturn(userPrincipal);
+    }
+
     @Test
-    @WithMockUser
     public void getAllProducts() throws Exception {
         this.mockMvc.perform(get("/products/"))
                 .andDo(print())
@@ -43,7 +63,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void getProduct() throws Exception {
         this.mockMvc.perform(get("/products/1"))
                 .andDo(print())
@@ -60,7 +79,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void addProduct() throws Exception {
 
         Product product = new Product();
@@ -79,7 +97,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void addKeyword() throws Exception {
 
         this.mockMvc.perform(put("/products/1/keywords/3")
@@ -92,7 +109,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void addExistKeyword() throws Exception {
 
         this.mockMvc.perform(put("/products/1/keywords/2")
@@ -105,7 +121,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void addKeywordToEmptyList() throws Exception {
 
         this.mockMvc.perform(put("/products/2/keywords/2")
@@ -118,7 +133,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void addUnknownKeyword() throws Exception {
 
         this.mockMvc.perform(put("/products/2/keywords/512")
@@ -128,7 +142,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void addCategory() throws Exception {
 
         this.mockMvc.perform(put("/products/1/categories/1")
@@ -141,7 +154,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void addExistCategory() throws Exception {
 
         this.mockMvc.perform(put("/products/1/categories/1")
@@ -154,7 +166,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void addCategoryToEmptyList() throws Exception {
 
         this.mockMvc.perform(put("/products/2/categories/1")
@@ -166,7 +177,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void addUnknownCategory() throws Exception {
 
         this.mockMvc.perform(put("/products/2/categories/2313")
@@ -176,7 +186,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void findByKeyword() throws Exception {
 
         this.mockMvc.perform(get("/products/keywords/2"))
@@ -188,7 +197,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void findByCategory() throws Exception {
 
         this.mockMvc.perform(get("/products/categories/1"))
