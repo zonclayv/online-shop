@@ -104,7 +104,7 @@ public class CartController {
     private Cart getCart(Long cartId) {
 
         Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new ResourceNotFoundException("Cart with id '" + cartId + "' not fount"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cart with id '" + cartId + "' not found"));
 
         UserPrincipal userPrincipal = securityContextService.getUserPrincipal();
         if (!Objects.equals(cart.getUser(), userPrincipal.getId())) {

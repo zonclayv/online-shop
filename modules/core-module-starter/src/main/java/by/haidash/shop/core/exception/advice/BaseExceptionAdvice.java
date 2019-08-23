@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 class BaseExceptionAdvice {
@@ -18,36 +18,39 @@ class BaseExceptionAdvice {
     @ResponseBody
     @ExceptionHandler(ResourceAlreadyExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse employeeNotFoundHandler(ResourceAlreadyExistException ex) {
+    public ErrorResponse employeeNotFoundHandler(HttpServletRequest request, ResourceAlreadyExistException ex) {
         return new ErrorResponse.Builder()
                 .withCode(ex.getCode())
                 .withMessage(ex.getMessage())
                 .withCurrentTimestamp()
                 .withStatus(HttpStatus.CONFLICT.value())
+                .withPath(request.getServletPath())
                 .build();
     }
 
     @ResponseBody
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse employeeNotFoundHandler(ResourceNotFoundException ex) {
+    public ErrorResponse employeeNotFoundHandler(HttpServletRequest request, ResourceNotFoundException ex) {
         return new ErrorResponse.Builder()
                 .withCode(ex.getCode())
                 .withMessage(ex.getMessage())
                 .withCurrentTimestamp()
                 .withStatus(HttpStatus.NOT_FOUND.value())
+                .withPath(request.getServletPath())
                 .build();
     }
 
     @ResponseBody
     @ExceptionHandler(InternalServerException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse internalServerExceptionHandler(InternalServerException ex) {
+    public ErrorResponse internalServerExceptionHandler(HttpServletRequest request, InternalServerException ex) {
         return new ErrorResponse.Builder()
                 .withCode(ex.getCode())
                 .withMessage(ex.getMessage())
                 .withCurrentTimestamp()
                 .withStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .withPath(request.getServletPath())
                 .build();
     }
 }

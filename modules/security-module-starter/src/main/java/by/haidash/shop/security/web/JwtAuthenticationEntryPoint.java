@@ -28,7 +28,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                 .withMessage(e.getMessage())
                 .withCurrentTimestamp()
                 .withStatus(HttpServletResponse.SC_UNAUTHORIZED)
-                .withPath(httpServletRequest.getContextPath())
+                .withPath(httpServletRequest.getServletPath())
                 .build();
 
         String json = mapper.writeValueAsString(errorResponse);
