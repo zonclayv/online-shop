@@ -24,6 +24,7 @@ class SecurityExceptionAdvice {
                 .withMessage(ex.getMessage())
                 .withCurrentTimestamp()
                 .withStatus(HttpStatus.FORBIDDEN.value())
+                .withError(HttpStatus.FORBIDDEN.getReasonPhrase())
                 .withPath(request.getServletPath())
                 .build();
     }
@@ -37,6 +38,7 @@ class SecurityExceptionAdvice {
                 .withMessage(ex.getMessage())
                 .withCurrentTimestamp()
                 .withStatus(HttpStatus.UNAUTHORIZED.value())
+                .withError(HttpStatus.UNAUTHORIZED.getReasonPhrase())
                 .withPath(request.getServletPath())
                 .build();
     }

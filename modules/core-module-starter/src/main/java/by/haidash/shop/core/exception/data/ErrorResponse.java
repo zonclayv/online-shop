@@ -1,13 +1,15 @@
 package by.haidash.shop.core.exception.data;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 
 public class ErrorResponse implements Serializable{
 
+    private String timestamp;
+    private int status;
+    private String error;
     private String code;
     private String message;
-    private long timestamp;
-    private int status;
     private String path;
 
     public String getCode() {
@@ -26,11 +28,11 @@ public class ErrorResponse implements Serializable{
         this.message = message;
     }
 
-    public long getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -50,12 +52,21 @@ public class ErrorResponse implements Serializable{
         this.path = path;
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
     public static class Builder {
 
         private String code;
         private String message;
-        private long timestamp;
+        private String timestamp;
         private int status;
+        private String error;
         private String path;
 
         public Builder withCode(String code){
@@ -66,12 +77,12 @@ public class ErrorResponse implements Serializable{
             this.message = message;
             return this;
         }
-        public Builder withTimestamp(long timestamp){
+        public Builder withTimestamp(String timestamp){
             this.timestamp = timestamp;
             return this;
         }
         public Builder withCurrentTimestamp(){
-            this.timestamp = System.currentTimeMillis();
+            this.timestamp = ZonedDateTime.now().toString();
             return this;
         }
 
@@ -85,6 +96,11 @@ public class ErrorResponse implements Serializable{
             return this;
         }
 
+        public Builder withError(String error){
+            this.error = error;
+            return this;
+        }
+
         public ErrorResponse build(){
             ErrorResponse response = new ErrorResponse();
             response.code = this.code;
@@ -92,6 +108,7 @@ public class ErrorResponse implements Serializable{
             response.timestamp = this.timestamp;
             response.status = this.status;
             response.path = this.path;
+            response.error = this.error;
             return response;
         }
     }

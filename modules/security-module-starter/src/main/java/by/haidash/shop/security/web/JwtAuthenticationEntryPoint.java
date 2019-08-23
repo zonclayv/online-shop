@@ -4,6 +4,7 @@ import by.haidash.shop.core.exception.data.ErrorResponse;
 import by.haidash.shop.security.exception.BaseAuthenticationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                 .withCode(BaseAuthenticationException.UNAUTHORIZED_EXCEPTION_CODE)
                 .withMessage(e.getMessage())
                 .withCurrentTimestamp()
-                .withStatus(HttpServletResponse.SC_UNAUTHORIZED)
+                .withStatus(HttpStatus.UNAUTHORIZED.value())
+                .withError(HttpStatus.UNAUTHORIZED.getReasonPhrase())
                 .withPath(httpServletRequest.getServletPath())
                 .build();
 

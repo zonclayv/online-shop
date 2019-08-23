@@ -24,6 +24,7 @@ class BaseExceptionAdvice {
                 .withMessage(ex.getMessage())
                 .withCurrentTimestamp()
                 .withStatus(HttpStatus.CONFLICT.value())
+                .withError(HttpStatus.CONFLICT.getReasonPhrase())
                 .withPath(request.getServletPath())
                 .build();
     }
@@ -37,6 +38,7 @@ class BaseExceptionAdvice {
                 .withMessage(ex.getMessage())
                 .withCurrentTimestamp()
                 .withStatus(HttpStatus.NOT_FOUND.value())
+                .withError(HttpStatus.NOT_FOUND.getReasonPhrase())
                 .withPath(request.getServletPath())
                 .build();
     }
@@ -50,6 +52,7 @@ class BaseExceptionAdvice {
                 .withMessage(ex.getMessage())
                 .withCurrentTimestamp()
                 .withStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .withError(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                 .withPath(request.getServletPath())
                 .build();
     }
