@@ -1,4 +1,4 @@
-package by.haidash.shop.jpa.initializer;
+package by.haidash.shop.messaging.initializer;
 
 import by.haidash.shop.core.exception.InternalServerException;
 import org.springframework.boot.env.YamlPropertySourceLoader;
@@ -14,10 +14,10 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
-public class JpaPropertiesInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+public class RabbitPropertiesInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-    private static final String PROPERTIES_NAME = "jpa-properties";
-    private static final String PROPERTIES_YML_PATH = "classpath:application-jpa.yml";
+    private static final String PROPERTIES_NAME = "properties-rabbit";
+    private static final String PROPERTIES_YML_PATH = "classpath:application-rabbit.yml";
 
     private final ResourceLoader loader = new DefaultResourceLoader();
 

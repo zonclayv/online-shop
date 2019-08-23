@@ -3,11 +3,11 @@ package by.haidash.shop.auth.controller;
 import by.haidash.shop.auth.controller.messaging.UserCheckMessage;
 import by.haidash.shop.messaging.properties.MessagingPropertiesEntry;
 import by.haidash.shop.messaging.service.MessagingService;
+import by.haidash.shop.security.exception.BaseAuthenticationException;
 import by.haidash.shop.security.properties.JwtProperties;
 import by.haidash.shop.security.service.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,10 +57,10 @@ public class AuthController {
                 UserCheckMessage.class,
                 userMessagingProperties.getExchange(),
                 userMessagingProperties.getRoute())
-                    .orElseThrow(() -> new BadCredentialsException("Invalid username/password supplied."));
+                    .orElseThrow(() -> new BaseAuthenticationException("Invalid username/password supplied."));
 
         if (StringUtils.isEmpty(response.getId()) || !passwordEncoder.matches(password, response.getPsw())) {
-            throw new BadCredentialsException("Invalid username/password supplied.");
+            throw new BaseAuthenticationException("Invalid username/password supplied.");
         }
 
         String token = jwtTokenService.createToken(

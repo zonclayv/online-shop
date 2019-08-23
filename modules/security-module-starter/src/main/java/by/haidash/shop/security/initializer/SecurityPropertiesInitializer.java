@@ -1,4 +1,4 @@
-package by.haidash.shop.jpa.initializer;
+package by.haidash.shop.security.initializer;
 
 import by.haidash.shop.core.exception.InternalServerException;
 import org.springframework.boot.env.YamlPropertySourceLoader;
@@ -14,10 +14,10 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
-public class JpaPropertiesInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+public class SecurityPropertiesInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-    private static final String PROPERTIES_NAME = "jpa-properties";
-    private static final String PROPERTIES_YML_PATH = "classpath:application-jpa.yml";
+    private static final String PROPERTIES_NAME = "properties-security";
+    private static final String PROPERTIES_YML_PATH = "classpath:application-security.yml";
 
     private final ResourceLoader loader = new DefaultResourceLoader();
 

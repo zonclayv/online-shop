@@ -1,2 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 by.haidash.shop.security.SecurityConfiguration
+
+org.springframework.context.ApplicationContextInitializer=\
+by.haidash.shop.security.initializer.SecurityPropertiesInitializer

@@ -1,0 +1,17 @@
+shop:
+  jwt:
+    loginUri: /auth/**
+    registrationUri: /**/signin/**
+    header: Authorization
+    prefix: "Bearer "
+    expiration: 300000 # 5 minutes duration by default: 5 minutes * 60 seconds * 1000 miliseconds
+    publicKey: |
+      -----BEGIN PUBLIC KEY-----
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnS7a9b9n66LUOuW1gykm
+      FaNMKGXiqEEmSZN24AbP5Ohvwi2P4my2kAd2XZ+KiNZPWRk/Qw7jxQLX/0TN5VUG
+      dDsEq2JuHdyQNezGbpdzMnOg7jh4bRONNPcd023c2v8CRxNKQ2P6ubRDnDRhIGB8
+      08ZNmLNDXbnLK97FOjSfjmLbX1XFebJci8LUm+/J1pcE/Sl7GfyyDSn/J5CB9PMr
+      T5ZBw6vHvGqO0pJEoIVKTlnjZJg61B4xVYyM8G2rgITNF1toGvoA7qq4TYMCEd/8
+      1G9M5gCJgHK6PfVPP3To26yib7JAZA1vnlEay/AnFRQt5BXcPBC9XMKqu4St11OL
+      iQIDAQAB
+      -----END PUBLIC KEY-----

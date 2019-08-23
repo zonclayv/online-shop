@@ -4,8 +4,8 @@ public class ResourceAlreadyExistException extends BaseRuntimeException {
 
     public static final String RESOURCE_ALREADY_EXIST_EXCEPTION_CODE = "409-001";
 
-    public ResourceAlreadyExistException(String msg, String code) {
-        super(msg, code);
+    public ResourceAlreadyExistException(String msg, Exception cause) {
+        super(msg, cause);
     }
 
     public ResourceAlreadyExistException(String msg) {

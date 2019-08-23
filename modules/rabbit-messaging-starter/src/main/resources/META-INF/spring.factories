@@ -1,3 +1,6 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 by.haidash.shop.messaging.MessagingConfiguration
+
+org.springframework.context.ApplicationContextInitializer=\
+by.haidash.shop.messaging.initializer.RabbitPropertiesInitializer
