@@ -1,6 +1,5 @@
 package by.haidash.shop.auth.controller;
 
-import by.haidash.shop.auth.controller.details.TokenDetails;
 import by.haidash.shop.auth.controller.messaging.UserCheckMessage;
 import by.haidash.shop.messaging.properties.MessagingPropertiesEntry;
 import by.haidash.shop.messaging.service.MessagingService;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.security.Key;
 import java.util.*;
 
@@ -25,6 +25,7 @@ public class AuthController {
     private String userCheckMessagingKey;
 
     private final Key signKey;
+    private final JwtProperties jwtProperties;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenService jwtTokenService;
     private final MessagingService messagingService;
@@ -33,16 +34,19 @@ public class AuthController {
     public AuthController(MessagingService messagingService,
                           PasswordEncoder passwordEncoder,
                           JwtProperties jwtProperties,
-                          JwtTokenService jwtTokenService) {
+                          JwtProperties jwtProperties1, JwtTokenService jwtTokenService) {
         this.messagingService = messagingService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtProperties = jwtProperties1;
         this.jwtTokenService = jwtTokenService;
 
         this.signKey = jwtTokenService.getPrivateKey(jwtProperties.getPrivateKey());
     }
 
     @PostMapping("/auth")
-    public TokenDetails auth(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public void auth(@RequestParam("username") String username,
+                     @RequestParam("password") String password,
+                     HttpServletResponse res) {
 
         MessagingPropertiesEntry userMessagingProperties = messagingService.getProperties(userCheckMessagingKey);
 
@@ -65,6 +69,6 @@ public class AuthController {
                 Collections.singletonList("USER"),
                 signKey);
 
-        return new TokenDetails(username, token);
+        res.addHeader(jwtProperties.getHeader(), token);
     }
 }

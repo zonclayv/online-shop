@@ -39,6 +39,7 @@
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
         </dependency>
+
         <dependency>
             <groupId>by.haidash.shop</groupId>
             <artifactId>jpa-module-starter</artifactId>
@@ -46,7 +47,7 @@
         </dependency>
         <dependency>
             <groupId>by.haidash.shop</groupId>
-            <artifactId>security-module</artifactId>
+            <artifactId>security-module-starter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
