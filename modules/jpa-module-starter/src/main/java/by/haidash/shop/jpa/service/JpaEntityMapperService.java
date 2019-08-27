@@ -26,7 +26,9 @@ public class JpaEntityMapperService implements EntityMapperService {
     @Override
     public <T extends BaseEntity, P extends BaseDetails> T convertToEntity(P details, Class<T> returnType) {
 
-        LOGGER.debug(format("Mapping details '%s' to entity '%s'.", details.getClass().getName(), returnType.getName()));
+        LOGGER.debug(format("Mapping details '%s' to entity '%s'.",
+                details.getClass().getSimpleName(),
+                returnType.getSimpleName()));
 
         return modelMapper.map(details, returnType);
     }
@@ -34,7 +36,9 @@ public class JpaEntityMapperService implements EntityMapperService {
     @Override
     public <T extends BaseEntity, P extends BaseDetails> P convertToDetails(T entity, Class<P> returnType) {
 
-        LOGGER.debug(format("Mapping entity '%s' to details '%s'.", entity.getClass().getName(), returnType.getName()));
+        LOGGER.debug(format("Mapping entity '%s' to details '%s'.",
+                entity.getClass().getSimpleName(),
+                returnType.getSimpleName()));
 
         return modelMapper.map(entity, returnType);
     }

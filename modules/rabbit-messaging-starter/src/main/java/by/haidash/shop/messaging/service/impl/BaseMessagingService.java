@@ -57,7 +57,7 @@ public class BaseMessagingService implements MessagingService {
                                             String route) {
 
         LOGGER.info(format("Message with response type '%s' will be sent using exchange '%s' and route '%s'.",
-                responseType.getName(),
+                responseType.getSimpleName(),
                 exchange,
                 route));
 
