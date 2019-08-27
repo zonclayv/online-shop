@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-class BaseExceptionAdvice {
+public abstract class BaseExceptionAdvice {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseExceptionAdvice.class);
 
