@@ -1,6 +1,8 @@
 package by.haidash.shop.jpa.initializer;
 
 import by.haidash.shop.core.exception.InternalServerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.env.YamlPropertySourceLoader;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -15,6 +17,8 @@ import java.util.List;
 
 @Component
 public class JpaPropertiesInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JpaPropertiesInitializer.class);
 
     private static final String PROPERTIES_NAME = "jpa-properties";
     private static final String PROPERTIES_YML_PATH = "classpath:application-jpa.yml";

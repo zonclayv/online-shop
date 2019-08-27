@@ -2,6 +2,8 @@ package by.haidash.shop.security.filter;
 
 import by.haidash.shop.security.model.UserPrincipal;
 import by.haidash.shop.security.service.JwtTokenService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -14,6 +16,8 @@ import java.io.IOException;
 
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenAuthenticationFilter.class);
+
     private final JwtTokenService jwtTokenService;
 
     public JwtTokenAuthenticationFilter(JwtTokenService jwtTokenService) {
@@ -24,6 +28,8 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
+
+        LOGGER.info("New authorization attempt.");
 
         try {
 
@@ -36,6 +42,9 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(auth);
 
         } catch (Exception e) {
+
+            LOGGER.warn("An authorization attempt failed.", e);
+
             SecurityContextHolder.clearContext();
         }
 

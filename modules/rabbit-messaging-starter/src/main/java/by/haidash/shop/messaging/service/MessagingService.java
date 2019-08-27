@@ -13,7 +13,7 @@ public interface MessagingService {
                   String route);
 
     <P> Optional<P> sendWithResponse(Object request,
-                                        Class<P> responseType,
-                                        String exchange,
-                                        String route);
+                                     Class<P> responseType,
+                                     String exchange,
+                                     String route);
 }

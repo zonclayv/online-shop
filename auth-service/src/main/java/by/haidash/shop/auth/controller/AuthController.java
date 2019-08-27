@@ -6,6 +6,8 @@ import by.haidash.shop.messaging.service.MessagingService;
 import by.haidash.shop.security.exception.BaseAuthenticationException;
 import by.haidash.shop.security.properties.JwtProperties;
 import by.haidash.shop.security.service.JwtTokenService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,8 +20,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.security.Key;
 import java.util.*;
 
+import static java.lang.String.format;
+
 @RestController
 public class AuthController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
     @Value("${shop.messaging.keys.user-check}")
     private String userCheckMessagingKey;
@@ -48,6 +54,8 @@ public class AuthController {
                      @RequestParam("password") String password,
                      HttpServletResponse res) {
 
+        LOGGER.info(String.format("A new attempt to obtain a token for a user with username '%s'.", username));
+
         MessagingPropertiesEntry userMessagingProperties = messagingService.getProperties(userCheckMessagingKey);
 
         UserCheckMessage request = new UserCheckMessage();
@@ -70,5 +78,7 @@ public class AuthController {
                 signKey);
 
         res.addHeader(jwtProperties.getHeader(), token);
+
+        LOGGER.info(format("Authorization token was successfully generated for user with username '%s'.", username));
     }
 }

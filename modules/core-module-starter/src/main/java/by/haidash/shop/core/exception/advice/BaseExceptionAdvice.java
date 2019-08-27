@@ -4,6 +4,8 @@ import by.haidash.shop.core.exception.InternalServerException;
 import by.haidash.shop.core.exception.ResourceAlreadyExistException;
 import by.haidash.shop.core.exception.ResourceNotFoundException;
 import by.haidash.shop.core.exception.data.ErrorResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,10 +17,15 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 class BaseExceptionAdvice {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseExceptionAdvice.class);
+
     @ResponseBody
     @ExceptionHandler(ResourceAlreadyExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse employeeNotFoundHandler(HttpServletRequest request, ResourceAlreadyExistException ex) {
+
+        LOGGER.warn(ex.getCode() + " " + ex.getMessage(), ex);
+
         return new ErrorResponse.Builder()
                 .withCode(ex.getCode())
                 .withMessage(ex.getMessage())
@@ -33,6 +40,9 @@ class BaseExceptionAdvice {
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse employeeNotFoundHandler(HttpServletRequest request, ResourceNotFoundException ex) {
+
+        LOGGER.warn(ex.getCode() + " " + ex.getMessage(), ex);
+
         return new ErrorResponse.Builder()
                 .withCode(ex.getCode())
                 .withMessage(ex.getMessage())
@@ -47,6 +57,9 @@ class BaseExceptionAdvice {
     @ExceptionHandler(InternalServerException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse internalServerExceptionHandler(HttpServletRequest request, InternalServerException ex) {
+
+        LOGGER.warn(ex.getCode() + " " + ex.getMessage(), ex);
+
         return new ErrorResponse.Builder()
                 .withCode(ex.getCode())
                 .withMessage(ex.getMessage())

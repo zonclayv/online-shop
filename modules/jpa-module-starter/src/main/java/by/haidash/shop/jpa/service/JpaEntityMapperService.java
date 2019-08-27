@@ -4,11 +4,17 @@ import by.haidash.shop.core.controller.details.BaseDetails;
 import by.haidash.shop.core.entity.BaseEntity;
 import by.haidash.shop.core.service.EntityMapperService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static java.lang.String.format;
+
 @Service
 public class JpaEntityMapperService implements EntityMapperService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JpaEntityMapperService.class);
 
     private final ModelMapper modelMapper;
 
@@ -19,11 +25,17 @@ public class JpaEntityMapperService implements EntityMapperService {
 
     @Override
     public <T extends BaseEntity, P extends BaseDetails> T convertToEntity(P details, Class<T> returnType) {
+
+        LOGGER.debug(format("Mapping details '%s' to entity '%s'.", details.getClass().getName(), returnType.getName()));
+
         return modelMapper.map(details, returnType);
     }
 
     @Override
     public <T extends BaseEntity, P extends BaseDetails> P convertToDetails(T entity, Class<P> returnType) {
+
+        LOGGER.debug(format("Mapping entity '%s' to details '%s'.", entity.getClass().getName(), returnType.getName()));
+
         return modelMapper.map(entity, returnType);
     }
 }

@@ -3,6 +3,8 @@ package by.haidash.shop.security.exception.advice;
 import by.haidash.shop.core.exception.data.ErrorResponse;
 import by.haidash.shop.security.exception.BaseAuthenticationException;
 import by.haidash.shop.security.exception.PermissionDeniedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,10 +17,15 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 class SecurityExceptionAdvice {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityExceptionAdvice.class);
+
     @ResponseBody
     @ExceptionHandler(PermissionDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ErrorResponse employeeNotFoundHandler(HttpServletRequest request, PermissionDeniedException ex) {
+
+        LOGGER.warn(ex.getCode() + " " + ex.getMessage(), ex);
+
         return new ErrorResponse.Builder()
                 .withCode(ex.getCode())
                 .withMessage(ex.getMessage())
@@ -33,6 +40,9 @@ class SecurityExceptionAdvice {
     @ExceptionHandler(BaseAuthenticationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResponse authenticationErrorHandler(HttpServletRequest request, BaseAuthenticationException ex) {
+
+        LOGGER.warn(ex.getCode() + " " + ex.getMessage(), ex);
+
         return new ErrorResponse.Builder()
                 .withCode(ex.getCode())
                 .withMessage(ex.getMessage())
