@@ -3,7 +3,7 @@ package by.haidash.shop.product.controller;
 import by.haidash.shop.product.ProductServiceApp;
 import by.haidash.shop.product.entity.Product;
 import by.haidash.shop.security.model.UserPrincipal;
-import by.haidash.shop.security.service.JwtTokenService;
+import by.haidash.shop.security.service.TokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class ProductControllerTest {
     private ObjectMapper mapper;
 
     @MockBean
-    private JwtTokenService jwtTokenService;
+    private TokenService tokenService;
 
     @Before
     public void setUp(){
@@ -51,7 +51,7 @@ public class ProductControllerTest {
                 .id(1L)
                 .build();
 
-        when(jwtTokenService.resolveToken(any())).thenReturn(userPrincipal);
+        when(tokenService.resolveToken(any())).thenReturn(userPrincipal);
     }
 
     @Test

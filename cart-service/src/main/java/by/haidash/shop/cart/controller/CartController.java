@@ -8,7 +8,7 @@ import by.haidash.shop.security.model.UserPrincipal;
 import by.haidash.shop.cart.entity.Cart;
 import by.haidash.shop.cart.entity.OrderProduct;
 import by.haidash.shop.cart.repository.CartRepository;
-import by.haidash.shop.security.service.SecurityContextService;
+import by.haidash.shop.security.service.ContextService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,16 +19,16 @@ import java.util.Objects;
 @RequestMapping("/carts")
 public class CartController {
 
-    private final SecurityContextService securityContextService;
+    private final ContextService contextService;
     private final CartRepository cartRepository;
     private final EntityMapperService entityMapperService;
 
     @Autowired
-    public CartController(SecurityContextService securityContextService,
+    public CartController(ContextService contextService,
                           CartRepository cartRepository,
                           EntityMapperService entityMapperService) {
 
-        this.securityContextService = securityContextService;
+        this.contextService = contextService;
         this.cartRepository = cartRepository;
         this.entityMapperService = entityMapperService;
     }
@@ -106,7 +106,7 @@ public class CartController {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart with id '" + cartId + "' not found"));
 
-        UserPrincipal userPrincipal = securityContextService.getUserPrincipal();
+        UserPrincipal userPrincipal = contextService.getUserPrincipal();
         if (!Objects.equals(cart.getUser(), userPrincipal.getId())) {
             throw new PermissionDeniedException("You do not have permission for getting cart with id '" + cartId + "'");
         }

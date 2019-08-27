@@ -1,7 +1,7 @@
 package by.haidash.shop.security.filter;
 
 import by.haidash.shop.security.model.UserPrincipal;
-import by.haidash.shop.security.service.JwtTokenService;
+import by.haidash.shop.security.service.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,10 +18,10 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenAuthenticationFilter.class);
 
-    private final JwtTokenService jwtTokenService;
+    private final TokenService tokenService;
 
-    public JwtTokenAuthenticationFilter(JwtTokenService jwtTokenService) {
-        this.jwtTokenService = jwtTokenService;
+    public JwtTokenAuthenticationFilter(TokenService tokenService) {
+        this.tokenService = tokenService;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
         try {
 
-            UserPrincipal userPrincipal = jwtTokenService.resolveToken(request);
+            UserPrincipal userPrincipal = tokenService.resolveToken(request);
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                     userPrincipal,
                         null,

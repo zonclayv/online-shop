@@ -2,7 +2,7 @@ package by.haidash.shop.security.config;
 
 import by.haidash.shop.security.filter.JwtTokenAuthenticationFilter;
 import by.haidash.shop.security.properties.JwtProperties;
-import by.haidash.shop.security.service.JwtTokenService;
+import by.haidash.shop.security.service.TokenService;
 import by.haidash.shop.security.web.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -16,15 +16,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtProperties jwtProperties;
-    private final JwtTokenService jwtTokenService;
+    private final TokenService tokenService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
     public DefaultSecurityConfig(JwtProperties jwtProperties,
-                                 JwtTokenService jwtTokenService,
+                                 TokenService tokenService,
                                  JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
         this.jwtProperties = jwtProperties;
-        this.jwtTokenService = jwtTokenService;
+        this.tokenService = tokenService;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
     }
 
@@ -36,7 +36,7 @@ public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
-                .addFilterAfter(new JwtTokenAuthenticationFilter(jwtTokenService),
+                .addFilterAfter(new JwtTokenAuthenticationFilter(tokenService),
                         UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, jwtProperties.getLoginUri()).permitAll()

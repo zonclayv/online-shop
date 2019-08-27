@@ -5,7 +5,7 @@ import by.haidash.shop.messaging.properties.MessagingPropertiesEntry;
 import by.haidash.shop.messaging.service.MessagingService;
 import by.haidash.shop.security.exception.BaseAuthenticationException;
 import by.haidash.shop.security.properties.JwtProperties;
-import by.haidash.shop.security.service.JwtTokenService;
+import by.haidash.shop.security.service.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import java.security.Key;
 import java.util.*;
 
 import static java.lang.String.format;
@@ -30,23 +29,21 @@ public class AuthController {
     @Value("${shop.messaging.keys.user-check}")
     private String userCheckMessagingKey;
 
-    private final Key signKey;
     private final JwtProperties jwtProperties;
     private final PasswordEncoder passwordEncoder;
-    private final JwtTokenService jwtTokenService;
+    private final TokenService tokenService;
     private final MessagingService messagingService;
 
     @Autowired
     public AuthController(MessagingService messagingService,
                           PasswordEncoder passwordEncoder,
                           JwtProperties jwtProperties,
-                          JwtProperties jwtProperties1, JwtTokenService jwtTokenService) {
+                          TokenService tokenService) {
+
         this.messagingService = messagingService;
         this.passwordEncoder = passwordEncoder;
-        this.jwtProperties = jwtProperties1;
-        this.jwtTokenService = jwtTokenService;
-
-        this.signKey = jwtTokenService.getPrivateKey(jwtProperties.getPrivateKey());
+        this.jwtProperties = jwtProperties;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/auth")
@@ -71,11 +68,10 @@ public class AuthController {
             throw new BaseAuthenticationException("Invalid username/password supplied.");
         }
 
-        String token = jwtTokenService.createToken(
+        String token = tokenService.createToken(
                 response.getEmail(),
                 response.getId(),
-                Collections.singletonList("USER"),
-                signKey);
+                Collections.singletonList("USER"));
 
         res.addHeader(jwtProperties.getHeader(), token);
 
