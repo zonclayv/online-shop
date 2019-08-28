@@ -30,7 +30,7 @@ public class SecurityPropertiesInitializer implements ApplicationContextInitiali
                 applicationContext.getEnvironment().getPropertySources().addLast(source);
             }
         } catch (IOException ex) {
-            throw new InternalServerException("An error occured while reading properties from " + PROPERTIES_YML_PATH, ex);
+            throw new InternalServerException("An error occurred while reading properties from " + PROPERTIES_YML_PATH, ex);
         }
     }
 
