@@ -1,0 +1,45 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'java'
+    id 'maven-publish'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = "org.springframework.boot"
+version = "0.0.1-SNAPSHOT"
+description = "product-service"
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    springCloudVersion = "Greenwich.RELEASE"
+    springfox = "2.9.2"
+    liquibase = "3.6.3"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+    implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
+    implementation("io.springfox:springfox-swagger2:${springfox}")
+    implementation("io.springfox:springfox-swagger-ui:${springfox}")
+    implementation("org.liquibase:liquibase-core:${liquibase}")
+    implementation("by.haidash.shop:core-module-starter:0.0.1-SNAPSHOT")
+    implementation("by.haidash.shop:security-module-starter:0.0.1-SNAPSHOT")
+    implementation("by.haidash.shop:jpa-module-starter:0.0.1-SNAPSHOT")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("com.h2database:h2")
+}

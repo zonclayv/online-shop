@@ -1,0 +1,37 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.6.RELEASE' apply false
+    id 'java'
+    id 'maven-publish'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = "by.haidash.shop"
+version = "0.0.1-SNAPSHOT"
+description = "security-module-starter"
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencyManagement {
+    imports {
+        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    jjwt = "0.9.0"
+    commonsCodec = "1.9"
+}
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("io.jsonwebtoken:jjwt:${jjwt}")
+    implementation("commons-codec:commons-codec:${commonsCodec}")
+    implementation("by.haidash.shop:core-module-starter:0.0.1-SNAPSHOT")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+}

@@ -1,0 +1,5 @@
+rootProject.name = 'auth-service'
+
+include 'modules:security-module-starter'
+include 'modules:rabbit-messaging-starter'
+include 'modules:core-module-starter'
