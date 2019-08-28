@@ -1,7 +1,5 @@
 package by.haidash.shop.user.messaging.consumer;
 
-import by.haidash.shop.core.exception.ResourceNotFoundException;
-import by.haidash.shop.user.entity.User;
 import by.haidash.shop.user.messaging.data.UserCheckMessage;
 import by.haidash.shop.user.repository.UserRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -29,7 +27,6 @@ public class UserMessagesConsumer {
                     message.setPsw(user.getPsw());
                     message.setId(user.getId());
                 });
-
 
         return message;
     }
