@@ -1,15 +1,13 @@
 package by.haidash.shop.messaging.service.impl;
 
 import by.haidash.shop.core.exception.InternalServerException;
-import by.haidash.shop.messaging.properties.MessagingPropertiesEntry;
 import by.haidash.shop.messaging.properties.MessagingProperties;
+import by.haidash.shop.messaging.properties.MessagingPropertiesEntry;
 import by.haidash.shop.messaging.service.MessagingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
@@ -17,7 +15,6 @@ import static java.lang.String.format;
 import static java.util.Optional.ofNullable;
 import static org.springframework.core.ParameterizedTypeReference.forType;
 
-@Service
 public class BaseMessagingService implements MessagingService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseMessagingService.class);

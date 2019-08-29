@@ -1,26 +1,31 @@
 package by.haidash.shop.messaging;
 
-import by.haidash.shop.messaging.properties.MessagingPropertiesEntry;
+import by.haidash.shop.messaging.initializer.RabbitPropertiesInitializer;
 import by.haidash.shop.messaging.properties.MessagingProperties;
-import org.springframework.amqp.core.*;
+import by.haidash.shop.messaging.properties.MessagingPropertiesEntry;
+import by.haidash.shop.messaging.service.MessagingService;
+import by.haidash.shop.messaging.service.impl.BaseMessagingService;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
 
 @EnableRabbit
 @Configuration
-@ComponentScan
 @EnableConfigurationProperties(MessagingProperties.class)
 public class MessagingConfiguration {
 
@@ -63,6 +68,7 @@ public class MessagingConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(producerJackson2MessageConverter());
@@ -70,7 +76,20 @@ public class MessagingConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public Jackson2JsonMessageConverter producerJackson2MessageConverter() {
         return new Jackson2JsonMessageConverter();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public RabbitPropertiesInitializer rabbitPropertiesInitializer() {
+        return new RabbitPropertiesInitializer();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public MessagingService messagingService(RabbitTemplate rabbitTemplate, MessagingProperties messagingProperties) {
+        return new BaseMessagingService(rabbitTemplate, messagingProperties);
     }
 }
