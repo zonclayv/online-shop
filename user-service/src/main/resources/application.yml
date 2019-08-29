@@ -1,12 +1,13 @@
 spring:
   application:
      name: user-service
-  main:
-    allow-bean-definition-overriding: true
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
 
-shop.messaging.listener.user-check: user-check-queue
+shop:
+  messaging:
+    listener:
+      user-check: user-check-queue
 
 server:
   port: 9203

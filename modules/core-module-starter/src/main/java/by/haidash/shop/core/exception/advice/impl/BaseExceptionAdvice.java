@@ -1,8 +1,9 @@
-package by.haidash.shop.core.exception.advice;
+package by.haidash.shop.core.exception.advice.impl;
 
 import by.haidash.shop.core.exception.InternalServerException;
 import by.haidash.shop.core.exception.ResourceAlreadyExistException;
 import by.haidash.shop.core.exception.ResourceNotFoundException;
+import by.haidash.shop.core.exception.advice.ExceptionAdvice;
 import by.haidash.shop.core.exception.data.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-public abstract class BaseExceptionAdvice {
+public abstract class BaseExceptionAdvice implements ExceptionAdvice {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseExceptionAdvice.class);
 

@@ -1,5 +1,6 @@
 package by.haidash.shop.security;
 
+import by.haidash.shop.core.exception.advice.ExceptionAdvice;
 import by.haidash.shop.security.config.DefaultSecurityConfig;
 import by.haidash.shop.security.exception.advice.SecurityExceptionAdvice;
 import by.haidash.shop.security.initializer.SecurityPropertiesInitializer;
@@ -31,7 +32,7 @@ public class SecurityConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public SecurityExceptionAdvice baseExceptionAdvice() {
+    public ExceptionAdvice securityExceptionAdvice() {
         return new SecurityExceptionAdvice() {
         };
     }

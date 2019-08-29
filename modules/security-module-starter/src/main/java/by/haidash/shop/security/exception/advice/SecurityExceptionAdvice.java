@@ -1,12 +1,12 @@
 package by.haidash.shop.security.exception.advice;
 
+import by.haidash.shop.core.exception.advice.ExceptionAdvice;
 import by.haidash.shop.core.exception.data.ErrorResponse;
 import by.haidash.shop.security.exception.BaseAuthenticationException;
 import by.haidash.shop.security.exception.PermissionDeniedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-public abstract class SecurityExceptionAdvice {
+public abstract class SecurityExceptionAdvice implements ExceptionAdvice {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityExceptionAdvice.class);
 
