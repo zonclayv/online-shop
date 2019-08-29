@@ -13,7 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
-public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
+public abstract class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtProperties jwtProperties;
     private final TokenService tokenService;

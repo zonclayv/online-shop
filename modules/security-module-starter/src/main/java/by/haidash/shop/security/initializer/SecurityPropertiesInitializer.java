@@ -8,12 +8,10 @@ import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
 
-@Component
 public class SecurityPropertiesInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     private static final String PROPERTIES_NAME = "properties-security";

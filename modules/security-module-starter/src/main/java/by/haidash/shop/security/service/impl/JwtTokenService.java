@@ -2,8 +2,8 @@ package by.haidash.shop.security.service.impl;
 
 import by.haidash.shop.core.exception.InternalServerException;
 import by.haidash.shop.security.exception.BaseAuthenticationException;
-import by.haidash.shop.security.properties.JwtProperties;
 import by.haidash.shop.security.model.UserPrincipal;
+import by.haidash.shop.security.properties.JwtProperties;
 import by.haidash.shop.security.service.KeyManagerService;
 import by.haidash.shop.security.service.TokenService;
 import io.jsonwebtoken.Claims;
@@ -11,14 +11,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Service
 public class JwtTokenService implements TokenService {
 
     private final JwtProperties jwtProperties;
@@ -65,7 +65,7 @@ public class JwtTokenService implements TokenService {
                 .parseClaimsJws(token)
                 .getBody();
 
-        if (claims == null){
+        if (claims == null) {
             throw new BaseAuthenticationException("Wrong authentication token.");
         }
 

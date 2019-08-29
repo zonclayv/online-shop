@@ -4,7 +4,6 @@ import by.haidash.shop.core.exception.InternalServerException;
 import by.haidash.shop.security.properties.JwtProperties;
 import by.haidash.shop.security.service.KeyManagerService;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.security.Key;
@@ -14,7 +13,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-@Service
 public class BaseKeyManagerService implements KeyManagerService {
 
     private static final String PATTERN_PRIVATE_KEY = "(-+BEGIN PRIVATE KEY-+\\r?\\n|-+END PRIVATE KEY-+\\r?\\n?)";
