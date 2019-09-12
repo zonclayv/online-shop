@@ -9,8 +9,8 @@ apply plugin: 'io.spring.dependency-management'
 group = "by.haidash.shop"
 version = "0.0.1-SNAPSHOT"
 description = "security-module-starter"
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 dependencyManagement {
     imports {

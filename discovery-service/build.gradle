@@ -9,8 +9,8 @@ apply plugin: 'io.spring.dependency-management'
 group = "org.springframework.boot"
 version = "0.0.1-SNAPSHOT"
 description = "discovery-service"
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 repositories {
     mavenCentral()
@@ -29,5 +29,11 @@ dependencyManagement {
 dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
     implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
+    // needed for spring-cloud-starter-netflix-eureka-server
+    implementation "javax.xml.bind:jaxb-api:2.2.11"
+    implementation "com.sun.xml.bind:jaxb-core:2.2.11"
+    implementation "com.sun.xml.bind:jaxb-impl:2.2.11"
+    implementation "javax.activation:activation:1.1.1"
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
